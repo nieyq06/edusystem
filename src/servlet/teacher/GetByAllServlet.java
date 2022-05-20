@@ -7,6 +7,7 @@ package servlet.teacher; /**
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
+import entity.TeacherInfo;
 import entity.User;
 import service.TeacherService;
 import service.impl.TeacherServiceImpl;
@@ -27,15 +28,10 @@ public class GetByAllServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TeacherService teacherService = new TeacherServiceImpl();
-        List<User> users =teacherService.getByAll();
+        List<TeacherInfo> tchs =teacherService.getByAll();
 
-        request.setAttribute("users",users);
-        for (User u:users){
-            System.out.println(u.getUserName());
-            System.out.println(u.getRoleId());
-            System.out.println(u.getUserId());
-        }
-        String json = JSONUtil.toJsonStr(users);
+        request.setAttribute("tchs",tchs);
+        String json = JSONUtil.toJsonStr(tchs);
         System.out.println("json："+ json);
 
     }

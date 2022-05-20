@@ -1,7 +1,6 @@
 package service;
 
-import entity.User;
-
+import entity.TeacherInfo;
 import java.util.List;
 
 /**
@@ -11,5 +10,5 @@ import java.util.List;
  * Version： 1.0
  */
 public interface TeacherService {
-    public List<User> getByAll();
+    public List<TeacherInfo> getByAll();
 }

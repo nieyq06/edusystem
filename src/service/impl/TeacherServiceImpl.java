@@ -2,6 +2,7 @@ package service.impl;
 
 import dao.TeacherDao;
 import dao.impl.TeacherDaoImpl;
+import entity.TeacherInfo;
 import entity.User;
 import service.TeacherService;
 import utils.DbUtils;
@@ -18,19 +19,19 @@ import java.util.List;
 public class TeacherServiceImpl implements TeacherService {
     private TeacherDao teacherDao = new TeacherDaoImpl();
     @Override
-    public List<User> getByAll() {
-        List<User> users = new ArrayList<>();
+    public List<TeacherInfo> getByAll() {
+        List<TeacherInfo> tchs = new ArrayList<>();
         try {
             DbUtils.begin();
-            List<User> temps = teacherDao.getByAll();
+            List<TeacherInfo> temps = teacherDao.getByAll();
             if (temps!=null){
-                users = temps;
+                tchs = temps;
             }
             DbUtils.commit();
         } catch (Exception e) {
             DbUtils.rollback();
             e.printStackTrace();
         }
-        return users;
+        return tchs;
     }
 }

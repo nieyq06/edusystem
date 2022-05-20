@@ -1,8 +1,9 @@
-package service;
+package service.impl;
 
 import dao.AuthorDao;
 import dao.impl.AuthorDaoImpl;
 import entity.User;
+import service.AuthorService;
 import utils.DbUtils;
 
 /**
@@ -11,7 +12,7 @@ import utils.DbUtils;
  * Description: 介绍
  * Version： 1.0
  */
-public class AuthorServiceImpl implements AuthorService{
+public class AuthorServiceImpl implements AuthorService {
     private AuthorDao authorDao = new AuthorDaoImpl();
     @Override
     public User login(String userid, String password) {

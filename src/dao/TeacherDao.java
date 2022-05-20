@@ -1,5 +1,6 @@
 package dao;
 
+import entity.TeacherInfo;
 import entity.User;
 
 import java.util.List;
@@ -11,5 +12,8 @@ import java.util.List;
  * Version： 1.0
  */
 public interface TeacherDao {
-    public List<User> getByAll();
+    public List<TeacherInfo> getByAll();
+    public TeacherInfo getById(String id);
+    public int update(User user);
+    public int delete(String id);
 }
