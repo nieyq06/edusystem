@@ -1,5 +1,9 @@
 <%@ page import="entity.User" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="entity.Faculty" %>
+<%@ page import="cn.hutool.json.JSONObject" %>
+<%@ page import="cn.hutool.json.JSON" %>
+<%@ page import="entity.Course" %><%--
   Created by IntelliJ IDEA.
   User: nyq
   Date: 2022/5/18
@@ -22,9 +26,11 @@
             <div class="col-2">
                 <select class="form-select" aria-label="Default select example">
                     <option selected>选择院系</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <% List<Faculty> faculty=(List<Faculty>) session.getAttribute("faculty");
+                        for (Faculty f :faculty){
+                    %>
+                    <option value="<%=f.getFacultyId()%>"><%=f.getFacultyName()%></option>
+                    <% }%>
                 </select>
             </div>
             <div class="col-6">
@@ -39,7 +45,6 @@
     <table class="table table-hover" id="table">
         <thead>
         <tr style="text-align: center" class="text-muted card-title" >
-
             <th data-field="#" style="width: 50px" data-field="id">#</th>
             <th data-sortable="true" data-field="userid">编码</th>
             <th data-sortable="true" data-field="userName">姓名</th>
@@ -62,10 +67,99 @@
         </tbody>
     </table>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoModalLabel">教师信息修改</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3 row">
+                        <label for="infoUserId" class="col-sm-2 col-form-label">教师编号</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="infoUserId" id="infoUserId">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="infoUsername" class="col-sm-2 col-form-label">教师姓名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="infoUsername" id="infoUsername">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="infoMan" class="col-sm-2 col-form-label">性别</label>
+                        <div class="col-sm-10">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="infoSex" id="infoMan" value="男" checked>
+                                <label class="form-check-label" for="infoMan">
+                                    男
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="infoSex" id="infoWomen" value="女">
+                                <label class="form-check-label" for="infoWomen">
+                                    女
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="infoTel" class="col-sm-2 col-form-label">电话</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="infoTel" id="infoTel">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="infoTel" class="col-sm-2 col-form-label">二级学院</label>
+                        <div class="col-sm-10">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>选择二级学院</option>
+                                <% ///List<Faculty> faculty=(List<Faculty>) session.getAttribute("faculty");
+                                    for (Faculty f :faculty){
+                                %>
+                                <option value="<%=f.getFacultyId()%>" onchange="facultyChange(this)"><%=f.getFacultyName()%></option>
+                                <% }%>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="infoTel" class="col-sm-2 col-form-label">主教专业</label>
+                        <div class="col-sm-10">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>选择专业</option>
+<%--                                <% ///List<Faculty> faculty=(List<Faculty>) session.getAttribute("faculty");--%>
+<%--                                    for (Course c : newCourse){--%>
+<%--                                %>--%>
+<%--                                <option value="<%=c.getCourseId()%>" onchange="facultyChange(this)"><%=c.getCourseName()%></option>--%>
+<%--                                <% }%>--%>
+                            </select>
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
 <script>
-    console.log(<%request.getAttribute("faculty");%>)
     $(function selectbtn() {
         showLoading();
         $.ajax({
@@ -75,36 +169,48 @@
             data: null,
             success: function (flag) {
                 let table=document.getElementById("table");
-                for(let i=0; i<flag.length; i++){
-                    let row=table.insertRow(table.rows.length);
-                    let c0=row.insertCell(0)
-                    c0.innerHTML=i+1;
-                    let c1=row.insertCell(1);
-                    c1.innerHTML=flag[i].userid;
-                    let c2=row.insertCell(2);
-                    c2.innerHTML=flag[i].username;
-                    let c3=row.insertCell(3);
-                    c3.innerHTML=flag[i].sex;
-                    let c4=row.insertCell(4);
-                    c4.innerHTML=flag[i].tel;
-                    let c5=row.insertCell(5);
-                    c5.innerHTML=flag[i].facultyname;
-                    let c6=row.insertCell(6);
-                    c6.innerHTML=flag[i].coursename;
-                    let c7=row.insertCell(7);
-                    c7.innerHTML=
-                        // "<span class='badge bg-primary btn btn-success' onclick=btnInfo(this)>修改</span>"+
-                        "<span class='badge btn btn-success operation' onclick=btnEdit(this)>修改</span>"+
-                        "<span class='badge btn btn-danger operation' onclick=btnDelete(this)>删除</span>"
+                if(flag.length>0){
+                    for(let i=0; i<flag.length; i++){
+                        let row=table.insertRow(table.rows.length);
+                        let c0=row.insertCell(0)
+                        c0.innerHTML=i+1;
+                        let c1=row.insertCell(1);
+                        c1.innerHTML=flag[i].userid;
+                        let c2=row.insertCell(2);
+                        c2.innerHTML=flag[i].username;
+                        let c3=row.insertCell(3);
+                        c3.innerHTML=flag[i].sex;
+                        let c4=row.insertCell(4);
+                        c4.innerHTML=flag[i].tel;
+                        let c5=row.insertCell(5);
+                        c5.innerHTML=flag[i].facultyname;
+                        let c6=row.insertCell(6);
+                        c6.innerHTML=flag[i].coursename;
+                        let c7=row.insertCell(7);
+                        c7.innerHTML=
+                            // "<span class='badge bg-primary btn btn-success' onclick=btnInfo(this) data-bs-toggle="modal" data-bs-target="#infoModal">修改</span>"+
+                            "<span class='badge btn btn-success operation' onclick=btnEdit(this)>修改</span>"+
+                            "<span class='badge btn btn-danger operation' onclick=btnDelete(this)>删除</span>"
+                    }
+                }else {
+                    let zwsj = " <tr><th class='text-muted' colspan='8'>暂无数据</th></tr> "
+                    $(zwsj).appendTo("#table");
                 }
                 completeLoading();
             }
         });
     })
+    function facultyChange(val){
+        console.log(val)
+        <%List<Course> courses=(List<Course>) session.getAttribute("courses");
+//          List<Course> newCourse = (List<Course>)courses.stream().filter(courseid->courseid.equals("val"));
+        %>
 
+    }
     function btnEdit(val){
         let value = $(val).parent().parent().find("td");
         let id=value.eq(1).text();
+        $('#infoModal').modal('show');
         console.log(value.eq(1).text())
     }
     function btnDelete(val){

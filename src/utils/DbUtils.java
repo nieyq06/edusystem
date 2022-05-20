@@ -60,6 +60,7 @@ public class DbUtils {
         Connection connection=null;
         try {
             connection=getConnection();
+            //connection.setAutoCommit(false);
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -34,7 +34,6 @@ public class GetTeacherByAllServlet extends HttpServlet {
 
         request.setAttribute("tchs",tchs);
         String json = JSONUtil.toJsonStr(tchs);
-
         response.getWriter().write(json);
 
         System.out.println("json："+ json);

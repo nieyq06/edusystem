@@ -32,7 +32,7 @@ public class GetByAllServlet extends HttpServlet {
 
         request.setAttribute("tchs",tchs);
         String json = JSONUtil.toJsonStr(tchs);
-        System.out.println("json："+ json);
+        //System.out.println("json："+ json);
 
     }
 }
