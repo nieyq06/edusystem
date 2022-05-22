@@ -15,10 +15,10 @@ import utils.DbUtils;
 public class AuthorServiceImpl implements AuthorService {
     private AuthorDao authorDao = new AuthorDaoImpl();
     @Override
-    public User login(String userid, String password) {
+    public User login(String userno, String password) {
         User user = null;
         try {
-            User temp = authorDao.select(userid);
+            User temp = authorDao.select(userno);
             if (temp != null) {
                 if(temp.getPassword().equals(password)){
                     user = temp;

@@ -32,44 +32,47 @@ public class AuthorLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //1.收参
-        String username = request.getParameter("username");
+        String userno = request.getParameter("username");
         String password = request.getParameter("password");
         String inputVcode = request.getParameter("inputVcode");
         //System.out.println(username+":"+password+":"+inputVcode);
         //2.校验验证码
         String codes = (String) request.getSession().getAttribute("codes");
-        if(!inputVcode.isEmpty() && inputVcode.equalsIgnoreCase(codes)){
+        System.out.println(userno+"\t"+password+"\t"+inputVcode);
+        System.out.println("验证码");
+        System.out.println(codes);
+        if (!inputVcode.isEmpty() && inputVcode.equalsIgnoreCase(codes)) {
             //调用业务逻辑实现登录
             AuthorService authorService = new AuthorServiceImpl();
             FacultyService facultyService = new FacultyServiceImpl();
             CourseService courseService = new CourseServiceImpl();
-            User user = authorService.login(username,password);
+            User user = authorService.login(userno, password);
+            System.out.println(user);
             if (user != null) {
                 //登录成功
                 //存储在session作用域
                 //获取用户
                 HttpSession session = request.getSession();
-                session.setAttribute("user",user);
+                session.setAttribute("user", user);
                 //获取二级学院信息
                 List<Faculty> faculty = facultyService.getByAll();
-                session.setAttribute("faculty",faculty);
+                session.setAttribute("faculty", faculty);
                 //获取课程信息
-//                List<Course> courses = courseService.getByAll();
-//                session.setAttribute("courses",courses);
+                List<Course> courses = courseService.getByAll();
+                String coursesjson = JSONUtil.toJsonStr(courses);
+                session.setAttribute("courses", coursesjson);
+                //登录成功后返回角色id
+                String res = "{\"role\":\"" + user.getRoleId() + "\",\"u\":\"0\"}";
+                response.getWriter().write(res);
 
-                //跳转到首页
-                if(user.getRoleId().equals("1")){
-                    response.sendRedirect(request.getContextPath() + "/mgr/index.jsp");
-                }else if(user.getRoleId().equals("2")){
-                    response.sendRedirect(request.getContextPath() + "/tch/index.jsp");
-                }else if(user.getRoleId().equals("3")){
-                    response.sendRedirect(request.getContextPath() + "/stu/index.jsp");
-                }
-            }else{
-                response.sendRedirect(request.getContextPath() + "/login.jsp");
+            } else {
+                String res = "{\"role\":\"\",\"u\":\"-1\"}";
+                response.getWriter().write(res);
             }
-        }else{
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+        }else {
+            String res = "{\"role\":\"\",\"u\":\"-2\"}";
+            response.getWriter().write(res);
+
         }
     }
 }

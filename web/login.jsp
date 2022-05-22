@@ -19,16 +19,16 @@
 <div class="topform">
     <div class="formback">
         <div class="content">
-            <form action="/edusystem/author/AuthorLoginServlet" class=" needs-validation" method="post" novalidate>
+            <form action="false" class=" needs-validation" method="post" novalidate>
                 <div class="row g-3">
                     <div class="col">
-                        <input type="text" name="username" class="form-control" placeholder="账号" aria-label="账号" required>
+                        <input type="text" name="username" id="username" class="form-control" placeholder="账号" aria-label="账号" required>
                         <div class="invalid-feedback">
                             请输入账号
                         </div>
                     </div>
                     <div class="col">
-                        <input type="password" name="password" class="form-control" placeholder="密码" aria-label="密码" required>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="密码" aria-label="密码" required>
                         <div class="invalid-feedback">
                             密码不能为空
                         </div>
@@ -36,8 +36,8 @@
                 </div>
                 <div class="row g-3">
                     <div class="col">
-                        <input type="text" name="inputVcode" class="form-control" placeholder="验证码" aria-label="验证码" required>
-                        <div class="invalid-feedback">
+                        <input type="text" name="inputVcode" id="inputVcode" class="form-control" placeholder="验证码" aria-label="验证码" required>
+                        <div class="invalid-feedback" id="Vcode">
                             请输入验证码
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="row g-3">
                     <div class="col">
-                        <button type="submit" class="btn btn-primary logbtn col-5 ">登 录</button>
+                        <button type="button" class="btn btn-primary logbtn col-5 " onclick="login()">登 录</button>
                     </div>
                 </div>
             </form>
@@ -55,30 +55,98 @@
         </div>
     </div>
 </div>
+<%--提示信息--%>
+<div class="modal fade" tabindex="-1" role="dialog" id="modelMsg" backdrop="static">
+    <div class="modal-dialog modal-sm " role="document">
+        <div id="mesg" style="text-align: center;">
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
 <script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    // 如果存在无效字段，则用于禁用表单提交的示例启动器 JavaScript
     (function () {
         'use strict'
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation')
-
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms)
+        // 获取我们想要应用自定义 Bootstrap 验证样式的所有表单
+        var form = document.querySelectorAll('.needs-validation')
+        // 循环它们并防止提交
+        Array.prototype.slice.call(form)
             .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
+                form.addEventListener('click', function (event) {
                     if (!form.checkValidity()) {
                         event.preventDefault()
                         event.stopPropagation()
                     }
-
                     form.classList.add('was-validated')
                 }, false)
             })
     })()
+    function login(){
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
+        let inputVcode = document.getElementById("inputVcode").value;
+        <%--let ss = <% request.getSession().getAttribute("codes");%>--%>
+        if(inputVcode.trim()==""){
+            // show_msg("#modelMsg","#mesg","验证码错误","alert modal-sm alert-danger","1200");
+            // $('#inputVcode').val('');
+            return;
+        }
+        $.ajax({
+            method:"post",
+            dataType:"json",
+            url:"/edusystem/author/AuthorLoginServlet",
+            data:{"username":username,"password":password,"inputVcode":inputVcode},
+            success:function (flag){
+                console.log(flag)
+                if(flag.u=="0"&&flag.role=="1"){
+                    window.location.href = "/edusystem/mgr/index.jsp"; // 路由跳转到管理员首页
+                }else if(flag.u=="0"&&flag.role=="2"){
+                    window.location.href = "/edusystem/tch/index.jsp";
+                }else if(flag.u=="0"&&flag.role=="3"){
+                    window.location.href = "/edusystem/stu/index.jsp";
+                }else if(flag.u=="-1") {
+                    show_msg("#modelMsg","#mesg","账号或密码有误","alert modal-sm alert-danger","1200");
+                    // $('#inputVcode').val('');
+                }else {
+                    show_msg("#modelMsg","#mesg","验证码有误","alert modal-sm alert-danger","1200");
+                    $('#inputVcode').val('');
+                }
+            }
+        })
+
+
+        // action="/edusystem/author/AuthorLoginServlet"
+    }
+    function test(val){
+        let username = document.getElementById(val).value
+        console.log("测试："+username)
+    }
+
+    function show_msg(modal_div, content_div, value, style, time) {
+        $(modal_div).modal({
+            backdrop: "static",//点击空白处不关闭对话框
+            show: true});
+        $(modal_div).modal('show');
+        $(".modal-backdrop").remove();
+        $(content_div).attr("class", style);
+        $(content_div).html(value)
+        setTimeout(function () {
+            $(modal_div).modal("hide")
+        }, time);
+        //
+        // $('#modelMsg').modal({
+        //     backdrop: "static",//点击空白处不关闭对话框
+        //     show: true});
+        // $('#modelMsg').modal('show');
+        // $(".modal-backdrop").remove();
+        // $("#mesg").attr("class", "alert alert-success");
+        // $('#mesg').html('成功')
+        // setTimeout(function () {
+        //     $('#modelMsg').modal("hide")
+        // }, 1200);
+    }
 </script>
 <style>
     body {

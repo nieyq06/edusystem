@@ -7,7 +7,8 @@ package entity;
  * Version： 1.0
  */
 public class User {
-    private String UserId;//编号
+    private String UserId;//id
+    private String UserNo;//用户编号，用于登录
     private String Password;//密码
     private String UserName;//名字
     private String Sex; //性别
@@ -23,6 +24,14 @@ public class User {
 
     public void setUserId(String userId) {
         UserId = userId;
+    }
+
+    public String getUserNo() {
+        return UserNo;
+    }
+
+    public void setUserNo(String userNo) {
+        UserNo = userNo;
     }
 
     public String getPassword() {
@@ -89,8 +98,9 @@ public class User {
         Tel = tel;
     }
 
-    public User(String userId, String password, String userName, String sex, String majorCourse, String facultyId, String professionId, String roleId, String tel) {
+    public User(String userId, String userNo, String password, String userName, String sex, String majorCourse, String facultyId, String professionId, String roleId, String tel) {
         UserId = userId;
+        UserNo = userNo;
         Password = password;
         UserName = userName;
         Sex = sex;

@@ -36,7 +36,9 @@
 </html>
 <script>
 
-    onload(home())
+    window.onload = function (){
+        home()
+    };
     //首页
     function home(){
         $("#section").load("home.jsp");

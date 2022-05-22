@@ -17,10 +17,10 @@ import java.sql.SQLException;
 public class AuthorDaoImpl implements AuthorDao {
     private QueryRunner queryRunner =new QueryRunner();
     @Override
-    public User select(String userid) {
-        String sql = "select * from User where userid=?";
+    public User select(String userno) {
+        String sql = "select * from User where userno=?";
         try {
-            User user = queryRunner.query(DbUtils.getConnection(),sql,new BeanHandler<User>(User.class),userid);
+            User user = queryRunner.query(DbUtils.getConnection(),sql,new BeanHandler<User>(User.class),userno);
             return user;
         } catch (SQLException e) {
             e.printStackTrace();

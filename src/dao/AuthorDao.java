@@ -9,5 +9,5 @@ import entity.User;
  * Version： 1.0
  */
 public interface AuthorDao {
-    public User select(String userid);
+    public User select(String userno);
 }

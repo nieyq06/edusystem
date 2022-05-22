@@ -7,68 +7,98 @@ package entity;
  * Version： 1.0
  */
 public class TeacherInfo {
-    private String userid;//用户id
-    private String username;//用户名称
-    private String sex;//性别
-    private String tel;//电话
-    private String facultyname;//归属二级学院
-    private String coursename;//主教课程
+    private String UserId;//用户id
+    private String UserNo;//用户编号
+    private String UserName;//用户名称
+    private String Sex;//性别
+    private String Tel;//电话
+    private String FacultyName;//归属二级学院
+    private String CourseName;//主教课程
+    private String FacultyId;//归属二级学院id
+    private String CourseId;//主教课程id
 
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return UserId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUserId(String userId) {
+        UserId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserNo() {
+        return UserNo;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserNo(String userNo) {
+        UserNo = userNo;
+    }
+
+    public String getUserName() {
+        return UserName;
+    }
+
+    public void setUserName(String userName) {
+        UserName = userName;
     }
 
     public String getSex() {
-        return sex;
+        return Sex;
     }
 
     public void setSex(String sex) {
-        this.sex = sex;
+        Sex = sex;
     }
 
     public String getTel() {
-        return tel;
+        return Tel;
     }
 
     public void setTel(String tel) {
-        this.tel = tel;
+        Tel = tel;
     }
 
-    public String getFacultyname() {
-        return facultyname;
+    public String getFacultyName() {
+        return FacultyName;
     }
 
-    public void setFacultyname(String facultyname) {
-        this.facultyname = facultyname;
+    public void setFacultyName(String facultyName) {
+        FacultyName = facultyName;
     }
 
-    public String getCoursename() {
-        return coursename;
+    public String getCourseName() {
+        return CourseName;
     }
 
-    public void setCoursename(String coursename) {
-        this.coursename = coursename;
+    public void setCourseName(String courseName) {
+        CourseName = courseName;
     }
 
-    public TeacherInfo(String userid, String username, String sex, String tel, String facultyname, String coursename) {
-        this.userid = userid;
-        this.username = username;
-        this.sex = sex;
-        this.tel = tel;
-        this.facultyname = facultyname;
-        this.coursename = coursename;
+    public String getFacultyId() {
+        return FacultyId;
+    }
+
+    public void setFacultyId(String facultyId) {
+        FacultyId = facultyId;
+    }
+
+    public String getCourseId() {
+        return CourseId;
+    }
+
+    public void setCourseId(String courseId) {
+        CourseId = courseId;
+    }
+
+    public TeacherInfo(String userId, String userNo, String userName, String sex, String tel, String facultyName, String courseName, String facultyId, String courseId) {
+        UserId = userId;
+        UserNo = userNo;
+        UserName = userName;
+        Sex = sex;
+        Tel = tel;
+        FacultyName = facultyName;
+        CourseName = courseName;
+        FacultyId = facultyId;
+        CourseId = courseId;
     }
 
     public TeacherInfo() {
