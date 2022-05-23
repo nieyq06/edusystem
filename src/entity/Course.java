@@ -9,7 +9,7 @@ package entity;
 public class Course {
     private String CourseId;//课程id
     private String CourseName;//课程名
-    private String TeacherId;//任课教师id
+    private String FacultyId;//二级学院id
     private double Credit;//学分
 
     public String getCourseId() {
@@ -28,12 +28,12 @@ public class Course {
         CourseName = courseName;
     }
 
-    public String getTeacherId() {
-        return TeacherId;
+    public String getFacultyId() {
+        return FacultyId;
     }
 
-    public void setTeacherId(String teacherId) {
-        TeacherId = teacherId;
+    public void setFacultyId(String facultyId) {
+        FacultyId = facultyId;
     }
 
     public double getCredit() {
@@ -44,10 +44,10 @@ public class Course {
         Credit = credit;
     }
 
-    public Course(String courseId, String courseName, String teacherId, double credit) {
+    public Course(String courseId, String courseName, String facultyId, double credit) {
         CourseId = courseId;
         CourseName = courseName;
-        TeacherId = teacherId;
+        FacultyId = facultyId;
         Credit = credit;
     }
 
