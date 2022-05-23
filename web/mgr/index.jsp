@@ -10,6 +10,7 @@
 <head>
     <title>管理员首页</title>
     <link href="../dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../dist/persona-writing.css" rel="stylesheet">
 </head>
 <body><div id="header">
     <h1> ~管理员页面~</h1>
@@ -32,7 +33,9 @@
 </div>
 <script src="../dist/jquery/jquery-3.5.1.min.js"></script>
 <script src="../dist/js/bootstrap.js"></script>
-<%--<script src="../dist/js/bootstrap-table.js"></script>--%>
+<script src="../dist/js/bootstrap-table.js"></script>
+<script src="../dist/personal-writing.js"></script>
+
 
 </body>
 </html>
@@ -40,38 +43,38 @@
 
     onload(home())
 
-    //首页
-    function home(){
-        $("#section").load("home.jsp");
-    }
-    //教师管理
-    function tchmgr(){
-        $("#section").load("tchmgr.jsp");
-    }
-    //学生管理
-    function stumgr(){
-        $("#section").load("stumgr.jsp");
-    }
-    //课程管理
-    function coursemgr(){
-        $("#section").load("coursemgr.jsp");
-    }
-    //职称管理
-    function titlemgr(){
-        $("#section").load("titlemgr.jsp");
-    }
-    //院系管理
-    function facultymgr(){
-        $("#section").load("facultymgr.jsp");
-    }
-    //授课地点管理
-    function classlocamgr(){
-        $("#section").load("classlocamgr.jsp");
-    }
-    //修改密码
-    function changepwd(){
-        $("#section").load("home.jsp");
-    }
+    // //首页
+    // function home(){
+    //     $("#section").load("home.jsp");
+    // }
+    // //教师管理
+    // function tchmgr(){
+    //     $("#section").load("tchmgr.jsp");
+    // }
+    // //学生管理
+    // function stumgr(){
+    //     $("#section").load("stumgr.jsp");
+    // }
+    // //课程管理
+    // function coursemgr(){
+    //     $("#section").load("coursemgr.jsp");
+    // }
+    // //职称管理
+    // function titlemgr(){
+    //     $("#section").load("titlemgr.jsp");
+    // }
+    // //院系管理
+    // function facultymgr(){
+    //     $("#section").load("facultymgr.jsp");
+    // }
+    // //授课地点管理
+    // function classlocamgr(){
+    //     $("#section").load("classlocamgr.jsp");
+    // }
+    // //修改密码
+    // function changepwd(){
+    //     $("#section").load("home.jsp");
+    // }
 </script>
 <style>
     html,

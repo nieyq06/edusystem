@@ -3,6 +3,7 @@ package service.impl;
 import dao.AdminDao;
 import dao.impl.AdminDaoImpl;
 import entity.TeacherInfo;
+import entity.User;
 import service.AdminService;
 import utils.DbUtils;
 
@@ -49,4 +50,37 @@ public class AdminServiceImpl implements AdminService {
             e.printStackTrace();
         }
         return result;    }
+
+    @Override
+    public int insertTeacher(User user) {
+        return 0;
+    }
+
+    @Override
+    public int updateTeacher(User user) {
+        int result = 0;
+        try {
+            DbUtils.begin();
+            result = adminDao.updateTeacher(user);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public int deleteTeacher(int id) {
+        int result = 0;
+        try {
+            DbUtils.begin();
+            result = adminDao.deleteTeacher(id);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

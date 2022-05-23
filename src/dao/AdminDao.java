@@ -16,5 +16,5 @@ public interface AdminDao {
     public TeacherInfo getTeacherById(int id);
     public int insertTeacher(User user);
     public int updateTeacher(User user);
-    public int deleteTeacher(String id);
+    public int deleteTeacher(int id);
 }

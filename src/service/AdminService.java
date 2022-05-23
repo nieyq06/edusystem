@@ -1,6 +1,7 @@
 package service;
 
 import entity.TeacherInfo;
+import entity.User;
 
 import java.util.List;
 
@@ -13,4 +14,7 @@ import java.util.List;
 public interface AdminService {
     public List<TeacherInfo> getTeacherByAll();
     public TeacherInfo getTeacherById(int id);
+    public int insertTeacher(User user);
+    public int updateTeacher(User user);
+    public int deleteTeacher(int id);
 }

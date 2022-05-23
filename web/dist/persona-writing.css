@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+.select, .tablecentent {
+    padding-right: 5px;
+    padding-left: 5px;
+    display: inline-block;
+    width: calc(100% - 150px);
+}
+
+.row {
+    margin-top: 0;
+}
+
+td > span {
+    --bs-gutter-x: 1rem;
+}
+
+.operation {
+    margin: 0 5px 0 5px;
+}
+/*取消占位*/
+.fixed-table-loading{
+    display: none;
+}

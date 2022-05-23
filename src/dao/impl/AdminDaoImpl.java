@@ -68,10 +68,10 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
-    public int deleteTeacher(String id) {
-        String sql="delete from user where roleid=? and userid=?";
+    public int deleteTeacher(int id) {
+        String sql="delete from user where userid=?";
         try {
-            int result = queryRunner.update(DbUtils.getConnection(),sql, new BeanHandler<User>(User.class),2,id);
+            int result = queryRunner.update(DbUtils.getConnection(),sql, id);
             return result;
         } catch (SQLException e) {
             e.printStackTrace();
