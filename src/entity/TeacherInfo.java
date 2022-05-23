@@ -7,7 +7,7 @@ package entity;
  * Version： 1.0
  */
 public class TeacherInfo {
-    private String UserId;//用户id
+    private int UserId;//用户id
     private String UserNo;//用户编号
     private String UserName;//用户名称
     private String Sex;//性别
@@ -17,11 +17,11 @@ public class TeacherInfo {
     private String FacultyId;//归属二级学院id
     private String CourseId;//主教课程id
 
-    public String getUserId() {
+    public int getUserId() {
         return UserId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         UserId = userId;
     }
 
@@ -89,7 +89,7 @@ public class TeacherInfo {
         CourseId = courseId;
     }
 
-    public TeacherInfo(String userId, String userNo, String userName, String sex, String tel, String facultyName, String courseName, String facultyId, String courseId) {
+    public TeacherInfo(int userId, String userNo, String userName, String sex, String tel, String facultyName, String courseName, String facultyId, String courseId) {
         UserId = userId;
         UserNo = userNo;
         UserName = userName;

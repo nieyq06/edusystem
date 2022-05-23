@@ -35,7 +35,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public TeacherInfo getTeacherById(String id) {
+    public TeacherInfo getTeacherById(int id) {
         TeacherInfo result= null;
         try {
             DbUtils.begin();

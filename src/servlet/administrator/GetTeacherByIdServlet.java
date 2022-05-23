@@ -27,7 +27,7 @@ doPost(request,response);
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AdminService adminService = new AdminServiceImpl();
-        String id = request.getParameter("userno");
+        int id = Integer.parseInt( request.getParameter("userid"));
         TeacherInfo tch = adminService.getTeacherById(id);
         String json_tch = JSONUtil.toJsonStr(tch);
         response.getWriter().write(json_tch);

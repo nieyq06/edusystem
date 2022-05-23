@@ -280,7 +280,7 @@
             type: "get",
             dataType: "json",
             url: "${pageContext.request.contextPath}/admin/safe/getTeacherByIdServlet",
-            data: {"userno": id},
+            data: {"userid": id},
             success: function (flag) {
                 if (flag != null) {
                     console.log(flag)
@@ -304,6 +304,21 @@
             }
         });
         console.log(value.eq(1).text())
+    }
+    //设置课程过滤
+    function filterCorse(val) {
+        let temps = ${sessionScope.courses}
+            temps_course = temps.filter(function (e) {
+                return e.FacultyId === val;
+            });//json数据过滤
+        let obj = document.getElementById('infoCourse');
+        //重置下来选项
+        obj.options.length = 1;
+        //添加过滤后的专业
+        for (let key in temps_course) {
+            let item = "<option value='" + temps_course[key].CourseId + "'" + ">" + temps_course[key].CourseName + "</option>"
+            $(item).appendTo("#infoCourse");
+        }
     }
 <%--    function btnDelete(val){--%>
 <%--        console.log(<%request.getAttribute("faculty");%>)--%>

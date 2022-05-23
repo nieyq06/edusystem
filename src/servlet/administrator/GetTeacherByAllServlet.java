@@ -32,7 +32,7 @@ public class GetTeacherByAllServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //调用业务逻辑实现获取所有教师信息
         AdminService adminService = new AdminServiceImpl();
-        List<TeacherInfo> tchs =adminService.getByAll();
+        List<TeacherInfo> tchs =adminService.getTeacherByAll();
         request.setAttribute("tchs",tchs);
         String json = JSONUtil.toJsonStr(tchs);
         response.getWriter().write(json);

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface AdminDao {
     public List<TeacherInfo> getTeacherByAll();
-    public TeacherInfo getTeacherById(String id);
+    public TeacherInfo getTeacherById(int id);
     public int insertTeacher(User user);
     public int updateTeacher(User user);
     public int deleteTeacher(String id);

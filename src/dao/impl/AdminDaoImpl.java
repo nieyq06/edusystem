@@ -32,7 +32,7 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
-    public TeacherInfo getTeacherById(String id) {
+    public TeacherInfo getTeacherById(int id) {
         String sql = "select u.userid,u.userno,u.username,u.sex,u.tel,f.facultyname,c.coursename,u.facultyid,c.courseid  from user u join course c on u.MajorCourse = c.CourseId join faculty f on u.facultyid=f.facultyid  where u.roleid=? and u.userid=?";
         try {
             TeacherInfo tch = queryRunner.query(DbUtils.getConnection(),sql, new BeanHandler<TeacherInfo>(TeacherInfo.class),2,id);

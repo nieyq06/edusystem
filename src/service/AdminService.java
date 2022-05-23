@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface AdminService {
     public List<TeacherInfo> getTeacherByAll();
-    public TeacherInfo getTeacherById(String id);
+    public TeacherInfo getTeacherById(int id);
 }
