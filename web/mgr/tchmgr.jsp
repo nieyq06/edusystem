@@ -34,7 +34,7 @@
                 </select>
             </div>
             <div class="col-6">
-                <button class="btn btn-success" onclick="selectbtn"> 搜索</button>
+                <button type="button" class="btn btn-success" onclick="selectbtn"> 搜索</button>
             </div>
 
         </div>
@@ -46,20 +46,22 @@
         <thead>
         <tr style="text-align: center" class="text-muted card-title" >
             <th data-field="#" style="width: 50px" data-field="id">#</th>
-            <th data-sortable="true" data-field="userid">编码</th>
-            <th data-sortable="true" data-field="userName">姓名</th>
-            <th data-sortable="false" data-field="sex">性别</th>
+            <th data-sortable="true" data-field="UserNo">编码</th>
+            <th data-sortable="true" data-field="UserName">姓名</th>
+            <th data-sortable="false" data-field="Sex">性别</th>
             <th data-sortable="false" data-field="Tel">电话</th>
             <th data-sortable="true" data-field="FacultyName">院系</th>
-            <th data-sortable="true" data-field="MajorCourse">主讲课程</th>
+            <th data-sortable="true" data-field="CourseName">主讲课程</th>
             <th>操作</th>
+            <th style="display: none">id</th>
         </tr>
         </thead>
         <tbody class="text-muted" style="text-align: center">
-        <div id="loadingDiv" style="display: none; ">
-            <div id="layout"
-                 style="position: absolute;top: 40%; left: 40%;width: 15%; height: 15%;  z-index: 1001;text-align:center;">
-                <img width="100px" src="/edusystem/img/giphy-unscreen.gif" />
+
+        <div class="text-center" id="loading" style="display: none">
+            <div class="spinner-grow text-primary" role="status"
+                 style="position: absolute; z-index: 1001;margin-top: 5rem;">
+                <span class="visually-hidden">Loading...</span>
             </div>
         </div>
 
@@ -160,72 +162,162 @@
 </body>
 </html>
 <script>
-    $(function selectbtn() {
+    // window.onload = function (){
+    //     var getUserId = "";
+    //     console.log("id:"+getUserId);
+    //     getAll();
+    // };
+    onload(getAll())
+    function getAll(){
         showLoading();
+        console.log("到~")
         $.ajax({
             type: "get",
             dataType: "json",
-            url: "${pageContext.request.contextPath}/admin/safe/getTeacherByAllServlet",
+            url: "/edusystem/admin/safe/getTeacherByAllServlet",
             data: null,
             success: function (flag) {
-                let table=document.getElementById("table");
-                if(flag.length>0){
-                    for(let i=0; i<flag.length; i++){
-                        let row=table.insertRow(table.rows.length);
-                        let c0=row.insertCell(0)
-                        c0.innerHTML=i+1;
-                        let c1=row.insertCell(1);
-                        c1.innerHTML=flag[i].userid;
-                        let c2=row.insertCell(2);
-                        c2.innerHTML=flag[i].username;
-                        let c3=row.insertCell(3);
-                        c3.innerHTML=flag[i].sex;
-                        let c4=row.insertCell(4);
-                        c4.innerHTML=flag[i].tel;
-                        let c5=row.insertCell(5);
-                        c5.innerHTML=flag[i].facultyname;
-                        let c6=row.insertCell(6);
-                        c6.innerHTML=flag[i].coursename;
-                        let c7=row.insertCell(7);
-                        c7.innerHTML=
+                console.log(flag)
+
+                let table = document.getElementById("table");
+                if (flag.length > 0) {
+                    for (let i = 0; i < flag.length; i++) {
+                        let row = table.insertRow(table.rows.length);
+                        let c0 = row.insertCell(0)
+                        c0.innerHTML = i + 1;
+                        let c1 = row.insertCell(1);
+                        c1.innerHTML = flag[i].UserNo;
+                        let c2 = row.insertCell(2);
+                        c2.innerHTML = flag[i].UserName;
+                        let c3 = row.insertCell(3);
+                        c3.innerHTML = flag[i].Sex;
+                        let c4 = row.insertCell(4);
+                        c4.innerHTML = flag[i].Tel;
+                        let c5 = row.insertCell(5);
+                        c5.innerHTML = flag[i].FacultyName;
+                        let c6 = row.insertCell(6);
+                        c6.innerHTML = flag[i].CourseName;
+                        let c7 = row.insertCell(7);
+                        c7.innerHTML =
                             // "<span class='badge bg-primary btn btn-success' onclick=btnInfo(this) data-bs-toggle="modal" data-bs-target="#infoModal">修改</span>"+
-                            "<span class='badge btn btn-success operation' onclick=btnEdit(this)>修改</span>"+
+                            "<span class='badge btn btn-success operation' onclick=btnEdit(this)>修改</span>" +
                             "<span class='badge btn btn-danger operation' onclick=btnDelete(this)>删除</span>"
+                        let c8 = row.insertCell(8);
+                        c8.innerHTML = flag[i].UserId;
+                        c8.style.display="none"
                     }
-                }else {
+                } else {
+                    $("#table>tbody").html("");
                     let zwsj = " <tr><th class='text-muted' colspan='8'>暂无数据</th></tr> "
                     $(zwsj).appendTo("#table");
                 }
                 completeLoading();
             }
         });
-    })
-    function facultyChange(val){
-        console.log(val)
-        <%List<Course> courses=(List<Course>) session.getAttribute("courses");
-//          List<Course> newCourse = (List<Course>)courses.stream().filter(courseid->courseid.equals("val"));
-        %>
 
     }
+
+<%--    $(function selectbtn() {--%>
+<%--        showLoading();--%>
+<%--        $.ajax({--%>
+<%--            type: "get",--%>
+<%--            dataType: "json",--%>
+<%--            url: "${pageContext.request.contextPath}/admin/safe/getTeacherByAllServlet",--%>
+<%--            data: null,--%>
+<%--            success: function (flag) {--%>
+<%--                let table=document.getElementById("table");--%>
+<%--                if(flag.length>0){--%>
+<%--                    for(let i=0; i<flag.length; i++){--%>
+<%--                        let row=table.insertRow(table.rows.length);--%>
+<%--                        let c0=row.insertCell(0)--%>
+<%--                        c0.innerHTML=i+1;--%>
+<%--                        let c1=row.insertCell(1);--%>
+<%--                        c1.innerHTML=flag[i].userid;--%>
+<%--                        let c2=row.insertCell(2);--%>
+<%--                        c2.innerHTML=flag[i].username;--%>
+<%--                        let c3=row.insertCell(3);--%>
+<%--                        c3.innerHTML=flag[i].sex;--%>
+<%--                        let c4=row.insertCell(4);--%>
+<%--                        c4.innerHTML=flag[i].tel;--%>
+<%--                        let c5=row.insertCell(5);--%>
+<%--                        c5.innerHTML=flag[i].facultyname;--%>
+<%--                        let c6=row.insertCell(6);--%>
+<%--                        c6.innerHTML=flag[i].coursename;--%>
+<%--                        let c7=row.insertCell(7);--%>
+<%--                        c7.innerHTML=--%>
+<%--                            // "<span class='badge bg-primary btn btn-success' onclick=btnInfo(this) data-bs-toggle="modal" data-bs-target="#infoModal">修改</span>"+--%>
+<%--                            "<span class='badge btn btn-success operation' onclick=btnEdit(this)>修改</span>"+--%>
+<%--                            "<span class='badge btn btn-danger operation' onclick=btnDelete(this)>删除</span>"--%>
+<%--                    }--%>
+<%--                }else {--%>
+<%--                    let zwsj = " <tr><th class='text-muted' colspan='8'>暂无数据</th></tr> "--%>
+<%--                    $(zwsj).appendTo("#table");--%>
+<%--                }--%>
+<%--                completeLoading();--%>
+<%--            }--%>
+<%--        });--%>
+<%--    })--%>
+<%--    function facultyChange(val){--%>
+<%--        console.log(val)--%>
+<%--        <%List<Course> courses=(List<Course>) session.getAttribute("courses");--%>
+<%--//          List<Course> newCourse = (List<Course>)courses.stream().filter(courseid->courseid.equals("val"));--%>
+<%--        %>--%>
+
+<%--    }--%>
     function btnEdit(val){
         let value = $(val).parent().parent().find("td");
-        let id=value.eq(1).text();
+        let id = value.eq(8).text();
+        console.log(id)
+        $("#infoUserNo").val();
+        $("#infoUsername").val();
+        $("input[name='infoSex'][value=女]").attr("checked", false)
+        $("input[name='infoSex'][value=男]").attr("checked", true)
+        $("#infoTel").val();
+        $("#infoFaculty").val();
+
         $('#infoModal').modal('show');
+        $.ajax({
+            type: "get",
+            dataType: "json",
+            url: "${pageContext.request.contextPath}/admin/safe/getTeacherByIdServlet",
+            data: {"userno": id},
+            success: function (flag) {
+                if (flag != null) {
+                    console.log(flag)
+                    getinfouserid = flag.userid;
+                    $("#infoUserNo").val(flag.userno)
+                    $("#infoUsername").val(flag.username)
+                    $("#input").val(flag.sex)
+                    if (flag.sex == "男") {
+                        $("input[name='infoSex'][value=女]").attr("checked", false)
+                        $("input[name='infoSex'][value=" + flag.sex + "]").attr("checked", true)
+                    } else {
+                        $("input[name='infoSex'][value=男]").attr("checked", false)
+                        $("input[name='infoSex'][value=" + flag.sex + "]").attr("checked", true)
+                    }
+                    $("#infoTel").val(flag.tel)
+                    $("#infoFaculty").val(flag.facultyid, flag.facultyname);
+                    filterCorse(flag.facultyid);
+                    $("#infoCourse").val(flag.courseid, flag.coursename);
+
+                }
+            }
+        });
         console.log(value.eq(1).text())
     }
-    function btnDelete(val){
-        console.log(<%request.getAttribute("faculty");%>)
-        let value = $(val).parent().parent().find("td");
-        let id=value.eq(1).text();
-        console.log(value.eq(1).text())
-    }
+<%--    function btnDelete(val){--%>
+<%--        console.log(<%request.getAttribute("faculty");%>)--%>
+<%--        let value = $(val).parent().parent().find("td");--%>
+<%--        let id=value.eq(1).text();--%>
+<%--        console.log(value.eq(1).text())--%>
+<%--    }--%>
     //移除loading效果
     function completeLoading() {
-        document.getElementById("loadingDiv").style.display = "none";
+        document.getElementById("loading").style.display = "none";
     }
     //展示loading效果
     function showLoading() {
-        document.getElementById("loadingDiv").style.display = "block";
+        document.getElementById("loading").style.display = "block";
     }
 </script>
 <style>

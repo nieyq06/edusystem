@@ -36,7 +36,7 @@
                 </div>
                 <div class="row g-3">
                     <div class="col">
-                        <input type="text" name="inputVcode" id="inputVcode" class="form-control" placeholder="验证码" aria-label="验证码" required>
+                        <input type="text" name="inputVcode" id="inputVcode"  class="form-control" placeholder="验证码" aria-label="验证码" required>
                         <div class="invalid-feedback" id="Vcode">
                             请输入验证码
                         </div>

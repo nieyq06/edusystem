@@ -10,8 +10,6 @@
 <head>
     <title>管理员首页</title>
     <link href="../dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="../dist/jquery/jquery-3.5.1.min.js"></script>
-    <script src="../dist/js/bootstrap.js"></script>
 </head>
 <body><div id="header">
     <h1> ~管理员页面~</h1>
@@ -32,13 +30,16 @@
 <div id="section">
 
 </div>
+<script src="../dist/jquery/jquery-3.5.1.min.js"></script>
+<script src="../dist/js/bootstrap.js"></script>
+<%--<script src="../dist/js/bootstrap-table.js"></script>--%>
+
 </body>
 </html>
 <script>
 
-    window.onload = function (){
-        home()
-    };
+    onload(home())
+
     //首页
     function home(){
         $("#section").load("home.jsp");
