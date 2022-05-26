@@ -14,11 +14,11 @@ import utils.DbUtils;
 public class CommonServiceImpl implements CommonService {
     CommonDao commonDao = new CommonDaoImpl();
     @Override
-    public long teacherCount(String selectCondition, String faculty) {
+    public long teacherCount(String selectFuzzy, String faculty) {
         long count = 0;
         try {
             DbUtils.begin();
-            count = commonDao.teacherCount(selectCondition,faculty);
+            count = commonDao.teacherCount(selectFuzzy,faculty);
             DbUtils.commit();
         } catch (Exception e) {
             DbUtils.rollback();
@@ -26,4 +26,17 @@ public class CommonServiceImpl implements CommonService {
         }
         return count;
     }
+
+    @Override
+    public long studentCount(String selectFuzzy, String faculty) {
+        long count = 0;
+        try {
+            DbUtils.begin();
+            count = commonDao.studentCount(selectFuzzy,faculty);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return count;    }
 }

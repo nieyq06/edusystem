@@ -19,11 +19,11 @@
 <div id="nav">
     <ul>
         <li onclick="home()">首页</li>
-        <li onclick="tchmgr()">教师管理</li>
-        <li onclick="stumgr()">学生管理</li>
-        <li onclick="coursemgr()">课程管理</li>
-        <li onclick="titlemgr()">职称管理</li>
-        <li onclick="facultymgr()">院系管理</li>
+        <li onclick="tchmgr()">教师信息管理</li>
+        <li onclick="stumgr()">学生信息管理</li>
+        <li onclick="coursemgr()">课程信息管理</li>
+        <li onclick="titlemgr()">职称信息管理</li>
+        <li onclick="facultymgr()">院系信息管理</li>
         <li onclick="classlocamgr()">授课地点管理</li>
         <li onclick="changepwd()">修改密码</li>
     </ul>

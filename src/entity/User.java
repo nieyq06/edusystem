@@ -14,7 +14,7 @@ public class User {
     private String Sex; //性别
     private String MajorCourse;//主讲课程
     private String FacultyId;//院系
-    private String ProfessionId;//专业
+    private String SubjectId;//专业
     private String RoleId;//角色 1 管理员 2教师 3学生
     private String Tel;//电话
 
@@ -74,12 +74,12 @@ public class User {
         FacultyId = facultyId;
     }
 
-    public String getProfessionId() {
-        return ProfessionId;
+    public String getSubjectId() {
+        return SubjectId;
     }
 
-    public void setProfessionId(String professionId) {
-        ProfessionId = professionId;
+    public void setSubjectId(String subjectId) {
+        SubjectId = subjectId;
     }
 
     public String getRoleId() {
@@ -98,7 +98,7 @@ public class User {
         Tel = tel;
     }
 
-    public User(int userId, String userNo, String password, String userName, String sex, String majorCourse, String facultyId, String professionId, String roleId, String tel) {
+    public User(int userId, String userNo, String password, String userName, String sex, String majorCourse, String facultyId, String subjectId, String roleId, String tel) {
         UserId = userId;
         UserNo = userNo;
         Password = password;
@@ -106,7 +106,7 @@ public class User {
         Sex = sex;
         MajorCourse = majorCourse;
         FacultyId = facultyId;
-        ProfessionId = professionId;
+        SubjectId = subjectId;
         RoleId = roleId;
         Tel = tel;
     }

@@ -1,7 +1,9 @@
 package service.impl;
 
+import cn.hutool.system.UserInfo;
 import dao.AdminDao;
 import dao.impl.AdminDaoImpl;
+import entity.StudentInfo;
 import entity.TeacherInfo;
 import entity.User;
 import service.AdminService;
@@ -49,7 +51,8 @@ public class AdminServiceImpl implements AdminService {
             DbUtils.rollback();
             e.printStackTrace();
         }
-        return result;    }
+        return result;
+    }
 
     @Override
     public int insertTeacher(User user) {
@@ -92,4 +95,79 @@ public class AdminServiceImpl implements AdminService {
         }
         return result;
     }
+
+    @Override
+    public List<StudentInfo> getStudentByAll(int page, int number, String selectFuzzy, String faculty) {
+        List<StudentInfo> stus = new ArrayList<>();
+        try {
+            DbUtils.begin();
+            List<StudentInfo> temps = adminDao.getStudentByAll(page,number,selectFuzzy,faculty);
+            if (temps!=null){
+                stus = temps;
+            }
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return stus;
+    }
+
+    @Override
+    public StudentInfo getStudentById(int id) {
+        StudentInfo result= null;
+        try {
+            DbUtils.begin();
+            StudentInfo temp = adminDao.getStudentById(id);
+            if(temp!=null){
+                result = temp;
+            }
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public int insertStudent(User user) {
+        int result = 0;
+        try {
+            DbUtils.begin();
+            result = adminDao.insertStudent(user);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public int updateStudent(User user) {
+        int result = 0;
+        try {
+            DbUtils.begin();
+            result = adminDao.updateStudent(user);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public int deleteStudent(int id) {
+        int result = 0;
+        try {
+            DbUtils.begin();
+            result = adminDao.deleteStudent(id);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;    }
 }

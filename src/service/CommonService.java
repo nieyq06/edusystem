@@ -7,5 +7,6 @@ package service;
  * Version： 1.0
  */
 public interface CommonService {
-    public long teacherCount( String selectCondition,String faculty);
+    public long teacherCount( String selectFuzzy,String faculty);
+    public long studentCount( String selectFuzzy,String faculty);
 }
