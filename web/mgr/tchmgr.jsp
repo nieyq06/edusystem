@@ -18,7 +18,7 @@
 </head>
 <body>
 <div class="select">
-        <div class="select">
+    <div class="select-form">
         <div class="row g-3" style="margin-right: 0px">
             <div class="col">
                 <input type="text" class="form-control" name="selectFuzzy" id="selectFuzzy" placeholder="模糊搜索">
@@ -36,11 +36,16 @@
             </div>
             <div class="col-6">
                 <button type="button" class="btn btn-success" id="btnSelect"> 搜索</button>
+                <button type="button" class="btn btn-success btn-float-r" id="btnOutput" onclick="fileOutput"> 导出
+                </button>
+                <button type="button" class="btn btn-info btn-float-r" id="btnImport" onclick="fileImport()"> 导入
+                </button>
+                <button type="button" class="btn btn-warning btn-float-r" id="btnInsert" onclick="btnInsert()"> 添加
+                </button>
             </div>
 
         </div>
-        </div>
-<%--    </form>--%>
+    </div>
 
 </div>
 <div class="tablecentent">
@@ -53,7 +58,6 @@
         </div>
     </table>
 </div>
-
 
 
 <!-- 修改 -->
@@ -69,7 +73,7 @@
                     <div class="mb-3 row">
                         <label for="infoUserNo" class="col-sm-2 col-form-label">教师编号</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="infoUserNo" id="infoUserNo" required>
+                            <input type="text" class="form-control" name="infoUserNo" id="infoUserNo" ria-label="教师编号" required>
                             <div class="invalid-feedback">
                                 教师编号不能为空
                             </div>
@@ -78,7 +82,7 @@
                     <div class="mb-3 row">
                         <label for="infoUsername" class="col-sm-2 col-form-label">教师姓名</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="infoUsername" id="infoUsername">
+                            <input type="text" class="form-control" name="infoUsername" id="infoUsername" ria-label="教师姓名" required>
                             <div class="invalid-feedback">
                                 教师姓名不能为空
                             </div>
@@ -107,16 +111,19 @@
                     <div class="mb-3 row">
                         <label for="infoTel" class="col-sm-2 col-form-label">电话</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="infoTel" id="infoTel">
+                            <input type="text" class="form-control" name="infoTel" id="infoTel" ria-label="电话" required>
+                            <div class="invalid-feedback">
+                                电话不能为空
+                            </div>
                         </div>
                     </div>
 
                     <div class="mb-3 row">
                         <label for="infoTel" class="col-sm-2 col-form-label">二级学院</label>
                         <div class="col-sm-10">
-                            <select class="form-select" aria-label="选择二级学院" id="infoFaculty" name="infoFaculty"
-                                    onchange="facultyChange(this)">
-                                <option selected>选择二级学院</option>
+                            <select class="form-select" aria-label="选择二级学院" id="infoFaculty" name="infoFaculty" ria-label="二级学院"
+                                    onchange="facultyChange(this)" required>
+                                <option selected value="选择二级学院">选择二级学院</option>
                                 <%
                                     for (Faculty f : faculty) {
                                 %>
@@ -133,7 +140,7 @@
                     <div class="mb-3 row">
                         <label for="infoTel" class="col-sm-2 col-form-label">主教课程</label>
                         <div class="col-sm-10">
-                            <select class="form-select" aria-label="选择专业" id="infoCourse" name="infoCourse">
+                            <select class="form-select" aria-label="选择专业" id="infoCourse" name="infoCourse" ria-label="主教课程" required>
                                 <option selected>选择专业</option>
                             </select>
                             <div class="invalid-feedback">
@@ -178,19 +185,40 @@
 </body>
 </html>
 <script>
-    onload=initTable()
+    onload = initTable()
     var setInfoUserId = -1
     var setDeleteUserId = -1
+    var infoSave = "";//保存按钮状态
+
+    function btnInsert() {
+        infoSave = "insert"
+        $("#infoModalLabel").html("添加教师信息")
+        clearModelInfo()
+        $('#infoModal').modal('show');
+
+    }
+
+    function clearModelInfo() {
+        $("#infoUserNo").val("");
+        $("#infoUsername").val("");
 
 
-    function test(){
-        var curAgentTablePageNumber = $("#table").bootstrapTable("getOptions").pageNumber;
-        console.log(curAgentTablePageNumber)
+        $("input[name='infoSex'][value=男]").attr("checked", true);
+        $("input[name='infoSex'][value=女]").attr("checked", false);
+
+        $("#infoTel").val("");
+        $("#infoFaculty").val("", "选择二级学院");
+        //重置专业下拉选项
+        let obj = document.getElementById('infoCourse');
+        obj.options.length = 1;
+        $("#infoCourse").val("","选择专业");
 
     }
 
     // 获取所有教师信息
-    function initTable(){
+    function initTable() {
+        showLoading();
+        $('#table').bootstrapTable('destroy');
         $('#table').bootstrapTable({
             method: 'get',
             toolbar: '#toolbar',  //工具按钮用哪个容器
@@ -198,22 +226,22 @@
             pagination: true,//分页
             sortable: false,   //是否启用排序
             // sortOrder: "asc",   //排序方式
-            pageNumber:1,   //初始化加载第一页，默认第一页
+            pageNumber: 1,   //初始化加载第一页，默认第一页
             pageSize: 15,   //每页的记录行数（*）
             url: "/edusystem/admin/safe/getTeacherByAllServlet",//这个接口需要处理bootstrap table传递的固定参数
 
-            queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
+            queryParamsType: '', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
             // 设置为 '' 在这种情况下传给服务器的参数为：pageSize,pageNumber
 
             sidePagination: "server",  //分页方式：client客户端分页，server服务端分页（*）
 
             //自定义分页字符串显示为中文
-            formatShowingRows:function(pageFrom, pageTo, totalRows)
-            {return "显示 "+pageFrom+"-"+pageTo+" 条记录，共 "+totalRows+" 条记录";},
+            formatShowingRows: function (pageFrom, pageTo, totalRows) {
+                return "显示 " + pageFrom + "-" + pageTo + " 条记录，共 " + totalRows + " 条记录";
+            },
 
-            formatNoMatches:function()
-            {
-                return  "未查询到相关记录";
+            formatNoMatches: function () {
+                return "未查询到相关记录";
             },
             queryParams: function (params) {
                 return {
@@ -294,9 +322,10 @@
                 }
             }],
         });
+        completeLoading();
         // 查询按钮
         $('#btnSelect').click(function () {
-            $('#table').bootstrapTable('refresh', { pageNumber: 1 });
+            $('#table').bootstrapTable('refresh', {pageNumber: 1});
         });
     }
 
@@ -304,16 +333,16 @@
         var curAgentTablePageNumber = 1;
         console.log(curAgentTablePageNumber)
         showLoading();
-        if(val=="page"){
+        if (val == "page") {
             curAgentTablePageNumber = $("#table").bootstrapTable("getOptions").pageNumber;
         }
-        var selectFuzzy =  $('#selectFuzzy').val()
-        if(selectFuzzy==null || selectFuzzy==""){
-            selectFuzzy="null"
+        var selectFuzzy = $('#selectFuzzy').val()
+        if (selectFuzzy == null || selectFuzzy == "") {
+            selectFuzzy = "null"
         }
-        var selectFaculty =  $('#selectFaculty').val()
-        if(selectFaculty=="选择院系"){
-            selectFaculty="null"
+        var selectFaculty = $('#selectFaculty').val()
+        if (selectFaculty == "选择院系") {
+            selectFaculty = "null"
         }
 
         $.ajax({
@@ -321,20 +350,26 @@
             dataType: "json",
             url: "/edusystem/admin/safe/getTeacherByAllServlet",
             // data: {"pageSize":50,"pageNumber":curAgentTablePageNumber,"selectFuzzy":selectFuzzy,"selectFaculty":selectFaculty},
-            data: {"pageSize":15,"pageNumber":curAgentTablePageNumber,"selectFuzzy":selectFuzzy,"selectFaculty":selectFaculty},
+            data: {
+                "pageSize": 15,
+                "pageNumber": curAgentTablePageNumber,
+                "selectFuzzy": selectFuzzy,
+                "selectFaculty": selectFaculty
+            },
             success: function (flag) {
                 console.log(flag)
-                $("#table").bootstrapTable("load",flag)//从新加载到表格中，数据即得以改变
+                $("#table").bootstrapTable("load", flag)//从新加载到表格中，数据即得以改变
                 $('#table').bootstrapTable({
-                    pageList:[15,25,50],//设置分页属性时，初始化页面尺寸选择列表。如果包含'all' 或 'unlimited' 选项，则所有记录将显示在表中。
+                    pageList: [15, 25, 50],//设置分页属性时，初始化页面尺寸选择列表。如果包含'all' 或 'unlimited' 选项，则所有记录将显示在表中。
                     pagination: true,//分页
                     locale: 'zh-CN',//设置为中文,本地化
                     pageSize: 15,//设置分页属性时，初始化页面大小
                     pageNumber: 1,//设置分页属性时，请初始化页码。
 
                     //自定义分页字符串显示为中文
-                    formatShowingRows:function(pageFrom, pageTo, totalRows)
-                    {return "显示 "+pageFrom+"-"+pageTo+" 条记录，共 "+totalRows+" 条记录";},
+                    formatShowingRows: function (pageFrom, pageTo, totalRows) {
+                        return "显示 " + pageFrom + "-" + pageTo + " 条记录，共 " + totalRows + " 条记录";
+                    },
 
 
                     columns: [{
@@ -409,8 +444,8 @@
                     data: flag,
                     // data: flag.rows
 
-                    rows:flag.rows,
-                    totalRows:flag.total,
+                    rows: flag.rows,
+                    totalRows: flag.total,
                 })
                 completeLoading();
             }
@@ -420,6 +455,7 @@
 
     //编辑按钮
     function btnEdit(val) {
+        infoSave = "update"
         $('#infoModal').modal('show');
         $.ajax({
             type: "get",
@@ -431,7 +467,7 @@
                     setInfoUserId = flag.UserId;
                     $("#infoUserNo").val(flag.UserNo)
                     $("#infoUsername").val(flag.UserName)
-                    $("#input").val(flag.Sex)
+
                     if (flag.Sex == "男") {
                         $("input[name='infoSex'][value=女]").attr("checked", false)
                         $("input[name='infoSex'][value=" + flag.Sex + "]").attr("checked", true)
@@ -439,6 +475,7 @@
                         $("input[name='infoSex'][value=男]").attr("checked", false)
                         $("input[name='infoSex'][value=" + flag.Sex + "]").attr("checked", true)
                     }
+
                     $("#infoTel").val(flag.Tel)
                     $("#infoFaculty").val(flag.FacultyId, flag.FacultyName);
                     filterCourse(flag.FacultyId);
@@ -456,48 +493,74 @@
         let infoTel = document.getElementById("infoTel").value
         let infoFaculty = document.getElementById("infoFaculty").value
         let infoCourse = document.getElementById("infoCourse").value
-        if (infoUserNo == null || infoUserNo == "" || infoUsername == null || infoUsername == "") {
-            return
-        }
-        $.ajax({
-            method: "post",
-            dataType: "json",
-            url: "/edusystem/admin/safe/updateTeacherServlet",
-            data: {
-                "infoUserId": setInfoUserId,
-                "infoUserNo": infoUserNo,
-                "infoUsername": infoUsername,
-                "infoSex": infoSex,
-                "infoTel": infoTel,
-                "infoFaculty": infoFaculty,
-                "infoCourse": infoCourse
-            },
-            success: function (flag) {
-                if (flag.res == "1") {
-                    modelDisplay("#infoModal","hide");
-                    getAll();
-                    model_Msg("#modelMsg", "#mesg", "修改成功", "alert modal-sm alert-success", 1000)
-                } else {
-                    model_Msg("#modelMsg", "#mesg", "修改失败", "alert modal-sm alert-danger", 1000)
-               }
+        if (infoSave == "update") {
+            if (infoUserNo == null || infoUserNo == "" || infoUsername == null || infoUsername == "") {
+                return
             }
-        })
+            $.ajax({
+                method: "post",
+                dataType: "json",
+                url: "/edusystem/admin/safe/updateTeacherServlet",
+                data: {
+                    "infoUserId": setInfoUserId,
+                    "infoUserNo": infoUserNo,
+                    "infoUsername": infoUsername,
+                    "infoSex": infoSex,
+                    "infoTel": infoTel,
+                    "infoFaculty": infoFaculty,
+                    "infoCourse": infoCourse
+                },
+                success: function (flag) {
+                    if (flag.res == "1") {
+                        $('#infoModal').modal('hide');
+                        initTable();
+                        model_Msg("#modelMsg", "#mesg", "修改成功", "alert modal-sm alert-success", 1000)
+                    } else {
+                        model_Msg("#modelMsg", "#mesg", "修改失败", "alert modal-sm alert-danger", 1000)
+                    }
+                }
+            })
+        }if (infoSave == "insert"){
+            $.ajax({
+                method: "post",
+                dataType: "json",
+                url: "/edusystem/admin/safe/insertTeacherServlet",
+                data: {
+                    "UserId": infoUserNo,
+                    "UserName": infoUsername,
+                    "Sex": infoSex,
+                    "Tel": infoTel,
+                    "FacultyId": infoFaculty,
+                    "CourseId": infoCourse
+                },
+                success: function (flag) {
+                    if (flag.res == "1") {
+                        $('#infoModal').modal('hide');
+                        initTable();
+                        model_Msg("#modelMsg", "#mesg", "添加成功", "alert modal-sm alert-success", 1000)
+                    } else {
+                        model_Msg("#modelMsg", "#mesg", "添加失败", "alert modal-sm alert-danger", 1000)
+                    }
+                }
+            })
+        }
     }
 
     //删除按钮
-    function btnDelete(val,no,name){
+    function btnDelete(val, no, name) {
         setDeleteUserId = val;
-        modelDisplay("#deleteModel","show")
+        // modelDisplay("#deleteModel","show")
+        $('#deleteModel').modal('show');
     }
 
     //确认删除
     function isDelete() {
         $.ajax({
-            url:"/edusystem/admin/safe/deleteTeacherServlet",
+            url: "/edusystem/admin/safe/deleteTeacherServlet",
             method: "post",
-            dataType:"json",
-            data:{"userid":setDeleteUserId},
-            success:function (flag){
+            dataType: "json",
+            data: {"userid": setDeleteUserId},
+            success: function (flag) {
                 if (flag.res == "1") {
                     getAll();
                     model_Msg("#modelMsg", "#mesg", "删除成功", "alert modal-sm alert-success", 1000)
@@ -512,23 +575,24 @@
     function filterCourse(val) {
         var temps_course = [];//每次更变二级学院后清空课程
         let temps = ${sessionScope.courses}
-            temps_course = temps.filter(function (e) {
-                return e.FacultyId === val;
-            });//json数据过滤
+            console.log(temps)
+        temps_course = temps.filter(function (e) {
+            return e.FacultyId === val;
+        });//json数据过滤
         let obj = document.getElementById('infoCourse');
         //重置下拉选项
         obj.options.length = 1;
+        console.log(temps_course)
         //添加过滤后的课程
-        let i = 1
         for (let key in temps_course) {
             let item = "<option value='" + temps_course[key].CourseId + "'" + ">" + temps_course[key].CourseName + "</option>"
             $(item).appendTo("#infoCourse");
         }
     }
+
     function facultyChange(val) {
         let faculty = $('#infoFaculty').val()
-        console.log("二级学院：" + faculty+":"+val);
-        filterCourse(val);
+        filterCourse(faculty);
     }
 
     //移除loading效果
@@ -540,32 +604,24 @@
     function showLoading() {
         document.getElementById("loading").style.display = "block";
     }
+    // 如果存在无效字段，则用于禁用表单提交的示例启动器 JavaScript
+    (function () {
+        'use strict'
+        // 获取我们想要应用自定义 Bootstrap 验证样式的所有表单
+        var form = document.querySelectorAll('.needs-validation')
+        // 循环它们并防止提交
+        Array.prototype.slice.call(form)
+            .forEach(function (form) {
+                form.addEventListener('click', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
 
-    function btnSelect(){
-        var fuzzy = document.getElementById("selectFuzzy").value
-        var faculty = document.getElementById("selectFaculty").value
-        $.ajax({
-            url:"",
-            dataType:"json",
-        })
-    }
-
-    // //消息提示框
-    // function model_Msg(msg_Model_div,msg_Content_div,value,style,time){
-    //     $(msg_Model_div).modal({
-    //         backdrop: "static",//点击空白处不关闭对话框
-    //         show: true});
-    //     $(msg_Model_div).modal('show');
-    //     $(".modal-backdrop").remove();
-    //     $(msg_Content_div).attr("class", style);
-    //     $(msg_Content_div).html(value)
-    //     setTimeout(function () {
-    //         $(msg_Model_div).modal("hide")
-    //     }, time);
-    // }
-    // function modelDisplay(model_name,model_display){
-    //     $(model_name).modal(model_display);
-    // }
 </script>
 <style>
     /*tr {*/
@@ -590,7 +646,7 @@
     /*.operation {*/
     /*    margin: 0 5px 0 5px;*/
     /*}*/
-    .no-records-found{
+    .no-records-found {
         text-align: center;
     }
 </style>

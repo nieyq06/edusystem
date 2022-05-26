@@ -53,7 +53,16 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public int insertTeacher(User user) {
-        return 0;
+        int result = 0;
+        try {
+            DbUtils.begin();
+            result = adminDao.insertTeacher(user);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override

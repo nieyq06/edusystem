@@ -49,3 +49,12 @@ td > span {
 .no-records-found{
     text-align: center;
 }
+.select-form {
+    display: block;
+    margin-top: 0em;
+    margin-block-end: 1em;
+}
+.btn-float-r{
+    float: right;
+    margin: 0 5px;
+}

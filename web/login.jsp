@@ -19,7 +19,7 @@
 <div class="topform">
     <div class="formback">
         <div class="content">
-            <form action="false" class=" needs-validation" method="post" novalidate>
+            <form class=" needs-validation" method="post" novalidate>
                 <div class="row g-3">
                     <div class="col">
                         <input type="text" name="username" id="username" class="form-control" placeholder="账号" aria-label="账号" required>
