@@ -34,6 +34,7 @@
 <script src="../dist/jquery/jquery-3.5.1.min.js"></script>
 <script src="../dist/js/bootstrap.js"></script>
 <script src="../dist/js/bootstrap-table.js"></script>
+<script src="../dist/js/bootstrap-table-zh-CN.js"></script>
 <script src="../dist/personal-writing.js"></script>
 
 

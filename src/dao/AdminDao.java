@@ -12,7 +12,7 @@ import java.util.List;
  * Version： 1.0
  */
 public interface AdminDao {
-    public List<TeacherInfo> getTeacherByAll();
+    public List<TeacherInfo> getTeacherByAll(int page,int number,String selectFuzzy, String faculty );
     public TeacherInfo getTeacherById(int id);
     public int insertTeacher(User user);
     public int updateTeacher(User user);

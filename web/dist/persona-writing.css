@@ -1,4 +1,4 @@
-@charset "UTF-8";
+
 
 .select, .tablecentent {
     padding-right: 5px;
@@ -18,7 +18,34 @@ td > span {
 .operation {
     margin: 0 5px 0 5px;
 }
+
+/*bootstrap-table分页样式修改*/
+
 /*取消占位*/
-.fixed-table-loading{
+.fixed-table-loading,.page-list{
     display: none;
+}
+
+/*将文字设置问行内元素*/
+.float-left{
+    display: inline-block;
+}
+
+/*分页按钮右浮动*/
+.pagination{
+    float: right;
+    display: flex;
+    padding-right: 10px;
+    list-style: none;
+    height: 50px;
+}
+.btn-secondary {
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #6c757d;
+    width: 65px;
+}
+
+.no-records-found{
+    text-align: center;
 }

@@ -18,14 +18,14 @@
 </head>
 <body>
 <div class="select">
-    <form class=" needs-validation" method="post">
+        <div class="select">
         <div class="row g-3" style="margin-right: 0px">
             <div class="col">
                 <input type="text" class="form-control" name="selectFuzzy" id="selectFuzzy" placeholder="模糊搜索">
             </div>
             <div class="col-3">
                 <select class="form-select" name="selectFaculty" id="selectFaculty" aria-label="选择院系">
-                    <option selected>选择院系</option>
+                    <option selected value="">选择院系</option>
                     <% List<Faculty> faculty = (List<Faculty>) session.getAttribute("faculty");
                         for (Faculty f : faculty) {
                     %>
@@ -35,15 +35,16 @@
                 </select>
             </div>
             <div class="col-6">
-                <button type="button" class="btn btn-success" onclick="btnSelect()"> 搜索</button>
+                <button type="button" class="btn btn-success" id="btnSelect"> 搜索</button>
             </div>
 
         </div>
-    </form>
+        </div>
+<%--    </form>--%>
 
 </div>
 <div class="tablecentent">
-    <table class="table table-hover text-muted" id="table">
+    <table class="table table-hover text-muted" id="table" data-toolbar="#toolbar">
         <div class="text-center" id="loading" style="display: none">
             <div class="spinner-grow text-primary" role="status"
                  style="position: absolute; z-index: 1001;margin-top: 5rem;">
@@ -52,6 +53,7 @@
         </div>
     </table>
 </div>
+
 
 
 <!-- 修改 -->
@@ -164,8 +166,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                编号：<em id="delUserNo"></em><br>
-                姓名：<em id="delUserName"></em>
+                <h3> 编号：<em id="delUserNo"></em>，姓名：<em id="delUserName"></em></h3>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-bs-dismiss="modal" onclick="isDelete()">确认删除</button>
@@ -177,22 +178,165 @@
 </body>
 </html>
 <script>
-    onload(getAll())
+    onload=initTable()
     var setInfoUserId = -1
     var setDeleteUserId = -1
 
+
+    function test(){
+        var curAgentTablePageNumber = $("#table").bootstrapTable("getOptions").pageNumber;
+        console.log(curAgentTablePageNumber)
+
+    }
+
     // 获取所有教师信息
-    function getAll() {
+    function initTable(){
+        $('#table').bootstrapTable({
+            method: 'get',
+            toolbar: '#toolbar',  //工具按钮用哪个容器
+            cache: false,   //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,//分页
+            sortable: false,   //是否启用排序
+            // sortOrder: "asc",   //排序方式
+            pageNumber:1,   //初始化加载第一页，默认第一页
+            pageSize: 15,   //每页的记录行数（*）
+            url: "/edusystem/admin/safe/getTeacherByAllServlet",//这个接口需要处理bootstrap table传递的固定参数
+
+            queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
+            // 设置为 '' 在这种情况下传给服务器的参数为：pageSize,pageNumber
+
+            sidePagination: "server",  //分页方式：client客户端分页，server服务端分页（*）
+
+            //自定义分页字符串显示为中文
+            formatShowingRows:function(pageFrom, pageTo, totalRows)
+            {return "显示 "+pageFrom+"-"+pageTo+" 条记录，共 "+totalRows+" 条记录";},
+
+            formatNoMatches:function()
+            {
+                return  "未查询到相关记录";
+            },
+            queryParams: function (params) {
+                return {
+                    pageSize: params.pageSize,                     // 每页记录条数
+                    pageNumber: params.pageNumber,                 // 当前页索引
+                    selectFuzzy: $('#selectFuzzy').val(),                        // 模糊搜索
+                    selectFaculty: $('#selectFaculty').val()                     // 院系
+                };
+            },
+
+            columns: [{
+                //序号自增实现方法
+                align: 'center',
+                valign: 'middle',
+                title: '序号',
+                field: 'xh',
+                formatter: function (value, row, index) {
+                    return index + 1;
+                }
+            }, {
+                align: 'center',
+                valign: 'middle',
+                visible: false,
+                field: 'UserId',
+                title: 'id'
+            }, {
+                align: 'center',
+                valign: 'middle',
+                field: 'UserNo',
+                title: '编码'
+            }, {
+                align: 'center',
+                valign: 'middle',
+                field: 'UserName',
+                title: '姓名'
+            }, {
+                align: 'center',
+                valign: 'middle',
+                field: 'Sex',
+                title: '性别'
+            }, {
+                align: 'center',
+                valign: 'middle',
+                field: 'Tel',
+                title: '电话'
+            }, {
+                align: 'center',
+                valign: 'middle',
+                field: 'FacultyName',
+                title: '院系'
+            }, {
+                align: 'center',
+                valign: 'middle',
+                field: 'CourseName',
+                title: '主讲课程'
+            }, {
+                field: 'operate',
+                title: '操作',
+                align: 'center',
+                valign: 'middle',
+                width: 200,
+                events: {
+                    'click #edit': function (e, value, row, index) {
+                        btnEdit(row.UserId)
+                    },
+                    'click #delete': function (e, value, row, index) {
+                        $("#delUserNo").html(row.UserNo)
+                        $("#delUserName").html(row.UserName)
+                        btnDelete(row.UserId);
+                    }
+                },
+
+                formatter: function (value, row, index) {
+                    var result = "";
+                    result += '<button id="edit" class=" btn btn-info btn-sm operation" data-toggle="modal" data-target="#editModal">编辑</button>';
+                    result += '<button id="delete" class="btn btn-danger btn-sm operation"  style="margin-left:10px;">删除</button>';
+                    return result;
+                }
+            }],
+        });
+        // 查询按钮
+        $('#btnSelect').click(function () {
+            $('#table').bootstrapTable('refresh', { pageNumber: 1 });
+        });
+    }
+
+    function getAll(val) {
+        var curAgentTablePageNumber = 1;
+        console.log(curAgentTablePageNumber)
         showLoading();
+        if(val=="page"){
+            curAgentTablePageNumber = $("#table").bootstrapTable("getOptions").pageNumber;
+        }
+        var selectFuzzy =  $('#selectFuzzy').val()
+        if(selectFuzzy==null || selectFuzzy==""){
+            selectFuzzy="null"
+        }
+        var selectFaculty =  $('#selectFaculty').val()
+        if(selectFaculty=="选择院系"){
+            selectFaculty="null"
+        }
+
         $.ajax({
             type: "get",
             dataType: "json",
             url: "/edusystem/admin/safe/getTeacherByAllServlet",
-            data: null,
+            // data: {"pageSize":50,"pageNumber":curAgentTablePageNumber,"selectFuzzy":selectFuzzy,"selectFaculty":selectFaculty},
+            data: {"pageSize":15,"pageNumber":curAgentTablePageNumber,"selectFuzzy":selectFuzzy,"selectFaculty":selectFaculty},
             success: function (flag) {
-
+                console.log(flag)
                 $("#table").bootstrapTable("load",flag)//从新加载到表格中，数据即得以改变
                 $('#table').bootstrapTable({
+                    pageList:[15,25,50],//设置分页属性时，初始化页面尺寸选择列表。如果包含'all' 或 'unlimited' 选项，则所有记录将显示在表中。
+                    pagination: true,//分页
+                    locale: 'zh-CN',//设置为中文,本地化
+                    pageSize: 15,//设置分页属性时，初始化页面大小
+                    pageNumber: 1,//设置分页属性时，请初始化页码。
+
+                    //自定义分页字符串显示为中文
+                    formatShowingRows:function(pageFrom, pageTo, totalRows)
+                    {return "显示 "+pageFrom+"-"+pageTo+" 条记录，共 "+totalRows+" 条记录";},
+
+
                     columns: [{
                         //序号自增实现方法
                         align: 'center',
@@ -262,7 +406,11 @@
                             return result;
                         }
                     }],
-                    data: flag
+                    data: flag,
+                    // data: flag.rows
+
+                    rows:flag.rows,
+                    totalRows:flag.total,
                 })
                 completeLoading();
             }
@@ -442,4 +590,7 @@
     /*.operation {*/
     /*    margin: 0 5px 0 5px;*/
     /*}*/
+    .no-records-found{
+        text-align: center;
+    }
 </style>

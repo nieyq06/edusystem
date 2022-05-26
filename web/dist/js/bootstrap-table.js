@@ -4564,6 +4564,7 @@
         return "Showing ".concat(pageFrom, " to ").concat(pageTo, " of ").concat(totalRows, " rows (filtered from ").concat(totalNotFiltered, " total rows)");
       }
 
+      // return "显示第 ".concat(pageFrom, " 到第 ").concat(pageTo, " 条记录，总共 ").concat(totalRows, " 条记录");
       return "Showing ".concat(pageFrom, " to ").concat(pageTo, " of ").concat(totalRows, " rows");
     },
     formatSRPaginationPreText: function formatSRPaginationPreText() {

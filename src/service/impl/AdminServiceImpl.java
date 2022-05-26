@@ -19,11 +19,11 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
     AdminDao adminDao = new AdminDaoImpl();
     @Override
-    public List<TeacherInfo> getTeacherByAll() {
+    public List<TeacherInfo> getTeacherByAll(int page,int number,String selectFuzzy, String faculty) {
         List<TeacherInfo> tchs = new ArrayList<>();
         try {
             DbUtils.begin();
-            List<TeacherInfo> temps = adminDao.getTeacherByAll();
+            List<TeacherInfo> temps = adminDao.getTeacherByAll(page,number,selectFuzzy,faculty);
             if (temps!=null){
                 tchs = temps;
             }
