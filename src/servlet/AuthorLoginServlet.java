@@ -8,13 +8,16 @@ package servlet; /**
 import cn.hutool.json.JSONUtil;
 import entity.Course;
 import entity.Faculty;
+import entity.Subject;
 import entity.User;
 import service.AuthorService;
 import service.CourseService;
 import service.FacultyService;
+import service.SubjectService;
 import service.impl.AuthorServiceImpl;
 import service.impl.CourseServiceImpl;
 import service.impl.FacultyServiceImpl;
+import service.impl.SubjectServiceImpl;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -46,6 +49,8 @@ public class AuthorLoginServlet extends HttpServlet {
             AuthorService authorService = new AuthorServiceImpl();
             FacultyService facultyService = new FacultyServiceImpl();
             CourseService courseService = new CourseServiceImpl();
+            SubjectService subjectService = new SubjectServiceImpl();
+
             User user = authorService.login(userno, password);
             System.out.println(user);
             if (user != null) {
@@ -61,6 +66,12 @@ public class AuthorLoginServlet extends HttpServlet {
                 List<Course> courses = courseService.getByAll();
                 String coursesjson = JSONUtil.toJsonStr(courses);
                 session.setAttribute("courses", coursesjson);
+                //获取所有专业信息
+                List<Subject> subjects = subjectService.getByAll_cache();
+                String subjectsjson = JSONUtil.toJsonStr(subjects);
+                session.setAttribute("subjects", subjectsjson);
+
+
                 //登录成功后返回角色id
                 String res = "{\"role\":\"" + user.getRoleId() + "\",\"u\":\"0\"}";
                 response.getWriter().write(res);

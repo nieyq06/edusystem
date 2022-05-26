@@ -67,7 +67,7 @@
             <form class="needs-validation" novalidate>
                 <div class="modal-body">
                     <div class="mb-3 row">
-                        <label for="infoUserNo" class="col-sm-2 col-form-label">教师编号</label>
+                        <label for="infoUserNo" class="col-sm-2 col-form-label">学号</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="infoUserNo" id="infoUserNo" ria-label="教师编号"
                                    required>
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="infoUsername" class="col-sm-2 col-form-label">教师姓名</label>
+                        <label for="infoUsername" class="col-sm-2 col-form-label">学生姓名</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="infoUsername" id="infoUsername"
                                    ria-label="教师姓名" required>
@@ -137,14 +137,14 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label for="infoTel" class="col-sm-2 col-form-label">主教课程</label>
+                        <label for="infoTel" class="col-sm-2 col-form-label">所属专业</label>
                         <div class="col-sm-10">
-                            <select class="form-select" aria-label="选择专业" id="infoCourse" name="infoCourse"
-                                    ria-label="主教课程" required>
+                            <select class="form-select" aria-label="选择专业" id="infoSubject" name="infoSubject"
+                                    ria-label="所属专业" required>
                                 <option selected>选择专业</option>
                             </select>
                             <div class="invalid-feedback">
-                                主教课程不能为空
+                                所属专业不能为空
                             </div>
                         </div>
                     </div>
@@ -169,11 +169,11 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalToggleLabel">提示：删除教师</h5>
+                <h5 class="modal-title" id="exampleModalToggleLabel">提示：删除学生</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h3> 编号：<em id="delUserNo"></em>，姓名：<em id="delUserName"></em></h3>
+                <h3> 学号：<em id="delUserNo"></em>，姓名：<em id="delUserName"></em></h3>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-bs-dismiss="modal" onclick="isDelete()">确认删除</button>
@@ -184,7 +184,7 @@
 </body>
 </html>
 <script>
-    onload = initTable()
+    onload = getAll()
     var setInfoUserId = -1
     var setDeleteUserId = -1
     var infoSave = "";//保存按钮状态
@@ -207,14 +207,14 @@
         $("#infoTel").val("");
         $("#infoFaculty").val("", "选择二级学院");
 //重置专业下拉选项
-        let obj = document.getElementById('infoCourse');
+        let obj = document.getElementById('infoSubject');
         obj.options.length = 1;
-        $("#infoCourse").val("", "选择专业");
+        $("#infoSubject").val("", "选择专业");
 
     }
 
     // 获取所有学生信息
-    function initTable() {
+    function getAll() {
         showLoading();
         $('#table').bootstrapTable('destroy');
         $('#table').bootstrapTable({
@@ -269,7 +269,7 @@
                 align: 'center',
                 valign: 'middle',
                 field: 'UserNo',
-                title: '编码'
+                title: '学号'
             }, {
                 align: 'center',
                 valign: 'middle',
@@ -336,7 +336,7 @@
         $.ajax({
             type: "get",
             dataType: "json",
-            url: "${pageContext.request.contextPath}/admin/safe/getTeacherByIdServlet",
+            url: "${pageContext.request.contextPath}/admin/safe/getStudentByIdServlet",
             data: {"userid": val},
             success: function (flag) {
                 if (flag != null) {
@@ -355,7 +355,7 @@
                     $("#infoTel").val(flag.Tel)
                     $("#infoFaculty").val(flag.FacultyId, flag.FacultyName);
                     filterCourse(flag.FacultyId);
-                    $("#infoCourse").val(flag.CourseId, flag.CourseName);
+                    $("#infoSubject").val(flag.SubjectId, flag.SubjectName);
                 }
             }
         });
@@ -368,7 +368,7 @@
         let infoSex = $('input[name=infoSex]:checked').val();
         let infoTel = document.getElementById("infoTel").value
         let infoFaculty = document.getElementById("infoFaculty").value
-        let infoCourse = document.getElementById("infoCourse").value
+        let infoSubject = document.getElementById("infoSubject").value
         if (infoSave == "update") {
             if (infoUserNo == null || infoUserNo == "" || infoUsername == null || infoUsername == "") {
                 return
@@ -376,7 +376,7 @@
             $.ajax({
                 method: "post",
                 dataType: "json",
-                url: "/edusystem/admin/safe/updateTeacherServlet",
+                url: "/edusystem/admin/safe/updateStudentServlet",
                 data: {
                     "infoUserId": setInfoUserId,
                     "infoUserNo": infoUserNo,
@@ -384,12 +384,12 @@
                     "infoSex": infoSex,
                     "infoTel": infoTel,
                     "infoFaculty": infoFaculty,
-                    "infoCourse": infoCourse
+                    "infoSubject": infoSubject
                 },
                 success: function (flag) {
                     if (flag.res == "1") {
                         $('#infoModal').modal('hide');
-                        initTable();
+                        getAll();
                         model_Msg("#modelMsg", "#mesg", "修改成功", "alert modal-sm alert-success", 1000)
                     } else {
                         model_Msg("#modelMsg", "#mesg", "修改失败", "alert modal-sm alert-danger", 1000)
@@ -401,19 +401,19 @@
             $.ajax({
                 method: "post",
                 dataType: "json",
-                url: "/edusystem/admin/safe/insertTeacherServlet",
+                url: "/edusystem/admin/safe/insertStudentServlet",
                 data: {
                     "UserId": infoUserNo,
                     "UserName": infoUsername,
                     "Sex": infoSex,
                     "Tel": infoTel,
                     "FacultyId": infoFaculty,
-                    "CourseId": infoCourse
+                    "SubjectId": infoSubject
                 },
                 success: function (flag) {
                     if (flag.res == "1") {
                         $('#infoModal').modal('hide');
-                        initTable();
+                        getAll();
                         model_Msg("#modelMsg", "#mesg", "添加成功", "alert modal-sm alert-success", 1000)
                     } else {
                         model_Msg("#modelMsg", "#mesg", "添加失败", "alert modal-sm alert-danger", 1000)
@@ -433,7 +433,7 @@
     //确认删除
     function isDelete() {
         $.ajax({
-            url: "/edusystem/admin/safe/deleteTeacherServlet",
+            url: "/edusystem/admin/safe/deleteStudentServlet",
             method: "post",
             dataType: "json",
             data: {"userid": setDeleteUserId},
@@ -448,22 +448,22 @@
         })
     }
 
-    //设置课程过滤
+    //设置专业过滤
     function filterCourse(val) {
-        var temps_course = [];//每次更变二级学院后清空课程
-        let temps = ${sessionScope.courses}
+        var temps_subject = [];//每次更变二级学院后清空课程
+        let temps = ${sessionScope.subjects}
             console.log(temps)
-        temps_course = temps.filter(function (e) {
+        temps_subject = temps.filter(function (e) {
             return e.FacultyId === val;
         });//json数据过滤
-        let obj = document.getElementById('infoCourse');
+        let obj = document.getElementById('infoSubject');
 //重置下拉选项
         obj.options.length = 1;
-        console.log(temps_course)
+        console.log(temps_subject)
 //添加过滤后的课程
-        for (let key in temps_course) {
-            let item = "<option value='" + temps_course[key].CourseId + "'" + ">" + temps_course[key].CourseName + "</option>"
-            $(item).appendTo("#infoCourse");
+        for (let key in temps_subject) {
+            let item = "<option value='" + temps_subject[key].SubjectId + "'" + ">" + temps_subject[key].SubjectName + "</option>"
+            $(item).appendTo("#infoSubject");
         }
     }
 
@@ -502,28 +502,6 @@
 
 </script>
 <style>
-    /*tr {*/
-    /*    text-align: center*/
-    /*}*/
-
-    /*.select, .tablecentent {*/
-    /*    padding-right: 5px;*/
-    /*    padding-left: 5px;*/
-    /*    display: inline-block;*/
-    /*    width: calc(100% - 150px);*/
-    /*}*/
-
-    /*.row {*/
-    /*    margin-top: 0;*/
-    /*}*/
-
-    /*td > span {*/
-    /*    --bs-gutter-x: 1rem;*/
-    /*}*/
-
-    /*.operation {*/
-    /*    margin: 0 5px 0 5px;*/
-    /*}*/
     .no-records-found {
         text-align: center;
     }

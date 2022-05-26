@@ -185,7 +185,7 @@
 </body>
 </html>
 <script>
-    onload = initTable()
+    onload = getAll()
     var setInfoUserId = -1
     var setDeleteUserId = -1
     var infoSave = "";//保存按钮状态
@@ -216,7 +216,7 @@
     }
 
     // 获取所有教师信息
-    function initTable() {
+    function getAll() {
         showLoading();
         $('#table').bootstrapTable('destroy');
         $('#table').bootstrapTable({
@@ -329,130 +329,6 @@
         });
     }
 
-    function getAll(val) {
-        var curAgentTablePageNumber = 1;
-        console.log(curAgentTablePageNumber)
-        showLoading();
-        if (val == "page") {
-            curAgentTablePageNumber = $("#table").bootstrapTable("getOptions").pageNumber;
-        }
-        var selectFuzzy = $('#selectFuzzy').val()
-        if (selectFuzzy == null || selectFuzzy == "") {
-            selectFuzzy = "null"
-        }
-        var selectFaculty = $('#selectFaculty').val()
-        if (selectFaculty == "选择院系") {
-            selectFaculty = "null"
-        }
-
-        $.ajax({
-            type: "get",
-            dataType: "json",
-            url: "/edusystem/admin/safe/getTeacherByAllServlet",
-            // data: {"pageSize":50,"pageNumber":curAgentTablePageNumber,"selectFuzzy":selectFuzzy,"selectFaculty":selectFaculty},
-            data: {
-                "pageSize": 15,
-                "pageNumber": curAgentTablePageNumber,
-                "selectFuzzy": selectFuzzy,
-                "selectFaculty": selectFaculty
-            },
-            success: function (flag) {
-                console.log(flag)
-                $("#table").bootstrapTable("load", flag)//从新加载到表格中，数据即得以改变
-                $('#table').bootstrapTable({
-                    pageList: [15, 25, 50],//设置分页属性时，初始化页面尺寸选择列表。如果包含'all' 或 'unlimited' 选项，则所有记录将显示在表中。
-                    pagination: true,//分页
-                    locale: 'zh-CN',//设置为中文,本地化
-                    pageSize: 15,//设置分页属性时，初始化页面大小
-                    pageNumber: 1,//设置分页属性时，请初始化页码。
-
-                    //自定义分页字符串显示为中文
-                    formatShowingRows: function (pageFrom, pageTo, totalRows) {
-                        return "显示 " + pageFrom + "-" + pageTo + " 条记录，共 " + totalRows + " 条记录";
-                    },
-
-
-                    columns: [{
-                        //序号自增实现方法
-                        align: 'center',
-                        valign: 'middle',
-                        title: '序号',
-                        field: 'xh',
-                        formatter: function (value, row, index) {
-                            return index + 1;
-                        }
-                    }, {
-                        align: 'center',
-                        valign: 'middle',
-                        visible: false,
-                        field: 'UserId',
-                        title: 'id'
-                    }, {
-                        align: 'center',
-                        valign: 'middle',
-                        field: 'UserNo',
-                        title: '编码'
-                    }, {
-                        align: 'center',
-                        valign: 'middle',
-                        field: 'UserName',
-                        title: '姓名'
-                    }, {
-                        align: 'center',
-                        valign: 'middle',
-                        field: 'Sex',
-                        title: '性别'
-                    }, {
-                        align: 'center',
-                        valign: 'middle',
-                        field: 'Tel',
-                        title: '电话'
-                    }, {
-                        align: 'center',
-                        valign: 'middle',
-                        field: 'FacultyName',
-                        title: '院系'
-                    }, {
-                        align: 'center',
-                        valign: 'middle',
-                        field: 'CourseName',
-                        title: '主讲课程'
-                    }, {
-                        field: 'operate',
-                        title: '操作',
-                        align: 'center',
-                        valign: 'middle',
-                        width: 200,
-                        events: {
-                            'click #edit': function (e, value, row, index) {
-                                btnEdit(row.UserId)
-                            },
-                            'click #delete': function (e, value, row, index) {
-                                $("#delUserNo").html(row.UserNo)
-                                $("#delUserName").html(row.UserName)
-                                btnDelete(row.UserId);
-                            }
-                        },
-
-                        formatter: function (value, row, index) {
-                            var result = "";
-                            result += '<button id="edit" class=" btn btn-info btn-sm operation" data-toggle="modal" data-target="#editModal">编辑</button>';
-                            result += '<button id="delete" class="btn btn-danger btn-sm operation"  style="margin-left:10px;">删除</button>';
-                            return result;
-                        }
-                    }],
-                    data: flag,
-                    // data: flag.rows
-
-                    rows: flag.rows,
-                    totalRows: flag.total,
-                })
-                completeLoading();
-            }
-        });
-
-    }
-
     //编辑按钮
     function btnEdit(val) {
         $("#infoModalLabel").html("修改教师信息")
@@ -514,7 +390,7 @@
                 success: function (flag) {
                     if (flag.res == "1") {
                         $('#infoModal').modal('hide');
-                        initTable();
+                        getAll();
                         model_Msg("#modelMsg", "#mesg", "修改成功", "alert modal-sm alert-success", 1000)
                     } else {
                         model_Msg("#modelMsg", "#mesg", "修改失败", "alert modal-sm alert-danger", 1000)
@@ -537,7 +413,7 @@
                 success: function (flag) {
                     if (flag.res == "1") {
                         $('#infoModal').modal('hide');
-                        initTable();
+                        getAll();
                         model_Msg("#modelMsg", "#mesg", "添加成功", "alert modal-sm alert-success", 1000)
                     } else {
                         model_Msg("#modelMsg", "#mesg", "添加失败", "alert modal-sm alert-danger", 1000)
