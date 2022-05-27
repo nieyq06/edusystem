@@ -177,6 +177,7 @@
         cursor: pointer;
     }
     .section{
-        width:calc(100% - 280px - 0.5rem);
+        width:calc(100%);
+        padding: 0 10px;
     }
 </style>

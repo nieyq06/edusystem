@@ -13,41 +13,35 @@
     <title>院系信息管理</title>
 </head>
 <body>
-<div class="select">
-    <div class="select-form">
-        <div class="row g-3" style="margin-right: 0px">
-            <div class="col">
-                <input type="text" class="form-control" name="facultyId" id="facultyId" placeholder="模糊搜索">
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" name="facultyName" id="facultyName" placeholder="模糊搜索">
-            </div>
+<div class="select-form">
+    <div class="row g-3" style="margin-right: 0px">
+        <div class="col">
+            <input type="text" class="form-control" name="facultyId" id="facultyId" placeholder="模糊搜索">
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" name="facultyName" id="facultyName" placeholder="模糊搜索">
+        </div>
 
-            <div class="col-6">
-                <button type="button" class="btn btn-success" id="btnSelect"> 搜索</button>
-                <button type="button" class="btn btn-success btn-float-r" id="btnOutput" onclick="fileOutput"> 导出
-                </button>
-                <button type="button" class="btn btn-info btn-float-r" id="btnImport" onclick="fileImport()"> 导入
-                </button>
-                <button type="button" class="btn btn-warning btn-float-r" id="btnAdd" onclick="btnAdd()"> 添加
-                </button>
-            </div>
-
+        <div class="col-6">
+            <button type="button" class="btn btn-success" id="btnSelect"> 搜索</button>
+            <button type="button" class="btn btn-success btn-float-r" id="btnOutput" onclick="fileOutput"> 导出
+            </button>
+            <button type="button" class="btn btn-info btn-float-r" id="btnImport" onclick="fileImport()"> 导入
+            </button>
+            <button type="button" class="btn btn-warning btn-float-r" id="btnAdd" onclick="btnAdd()"> 添加
+            </button>
         </div>
     </div>
 
 </div>
-<div class="tablecentent">
-    <table class="table table-hover text-muted" id="table" data-toolbar="#toolbar">
-        <div class="text-center" id="loading" style="display: none">
-            <div class="spinner-grow text-primary" role="status"
-                 style="position: absolute; z-index: 1001;margin-top: 5rem;">
-                <span class="visually-hidden">Loading...</span>
-            </div>
+<table class="table table-hover text-muted" id="table" data-toolbar="#toolbar">
+    <div class="text-center" id="loading" style="display: none">
+        <div class="spinner-grow text-primary" role="status"
+             style="position: absolute; z-index: 1001;margin-top: 5rem;">
+            <span class="visually-hidden">Loading...</span>
         </div>
-    </table>
-</div>
-
+    </div>
+</table>
 
 <!-- 修改 -->
 <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">

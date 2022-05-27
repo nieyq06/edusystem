@@ -13,48 +13,42 @@
     <title>学生信息管理</title>
 </head>
 <body>
-<div class="select">
-    <div class="select-form">
-        <div class="row g-3" style="margin-right: 0px">
-            <div class="col">
-                <input type="text" class="form-control" name="selectFuzzy" id="selectFuzzy" placeholder="模糊搜索">
-            </div>
-            <div class="col-3">
-                <select class="form-select" name="selectFaculty" id="selectFaculty" aria-label="选择院系">
-                    <option selected value="">选择院系</option>
-                    <% List<Faculty> faculty = (List<Faculty>) session.getAttribute("faculty");
-                        for (Faculty f : faculty) {
-                    %>
-                    <option value="<%=f.getFacultyId()%>"><%=f.getFacultyName()%>
-                    </option>
-                    <% }%>
-                </select>
-            </div>
-            <div class="col-6">
-                <button type="button" class="btn btn-success" id="btnSelect"> 搜索</button>
-                <button type="button" class="btn btn-success btn-float-r" id="btnOutput" onclick="fileOutput"> 导出
-                </button>
-                <button type="button" class="btn btn-info btn-float-r" id="btnImport" onclick="fileImport()"> 导入
-                </button>
-                <button type="button" class="btn btn-warning btn-float-r" id="btnInsert" onclick="btnInsert()"> 添加
-                </button>
-            </div>
-
+<div class="select-form">
+    <div class="row g-3" style="margin-right: 0px">
+        <div class="col">
+            <input type="text" class="form-control" name="selectFuzzy" id="selectFuzzy" placeholder="模糊搜索">
+        </div>
+        <div class="col-3">
+            <select class="form-select" name="selectFaculty" id="selectFaculty" aria-label="选择院系">
+                <option selected value="">选择院系</option>
+                <% List<Faculty> faculty = (List<Faculty>) session.getAttribute("faculty");
+                    for (Faculty f : faculty) {
+                %>
+                <option value="<%=f.getFacultyId()%>"><%=f.getFacultyName()%>
+                </option>
+                <% }%>
+            </select>
+        </div>
+        <div class="col-6">
+            <button type="button" class="btn btn-success" id="btnSelect"> 搜索</button>
+            <button type="button" class="btn btn-success btn-float-r" id="btnOutput" onclick="fileOutput"> 导出
+            </button>
+            <button type="button" class="btn btn-info btn-float-r" id="btnImport" onclick="fileImport()"> 导入
+            </button>
+            <button type="button" class="btn btn-warning btn-float-r" id="btnInsert" onclick="btnInsert()"> 添加
+            </button>
         </div>
     </div>
 
 </div>
-<div class="tablecentent">
-    <table class="table table-hover text-muted" id="table" data-toolbar="#toolbar">
-        <div class="text-center" id="loading" style="display: none">
-            <div class="spinner-grow text-primary" role="status"
-                 style="position: absolute; z-index: 1001;margin-top: 5rem;">
-                <span class="visually-hidden">Loading...</span>
-            </div>
+<table class="table table-hover text-muted" id="table" data-toolbar="#toolbar">
+    <div class="text-center" id="loading" style="display: none">
+        <div class="spinner-grow text-primary" role="status"
+             style="position: absolute; z-index: 1001;margin-top: 5rem;">
+            <span class="visually-hidden">Loading...</span>
         </div>
-    </table>
-</div>
-
+    </div>
+</table>
 
 <!-- 修改 -->
 <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
