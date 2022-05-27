@@ -60,7 +60,7 @@ public class AuthorLoginServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 //获取二级学院信息
-                List<Faculty> faculty = facultyService.getByAll();
+                List<Faculty> faculty = facultyService.getByAll_cache();
                 session.setAttribute("faculty", faculty);
                 //获取课程信息
                 List<Course> courses = courseService.getByAll_cache();

@@ -68,4 +68,22 @@ public class CommonDaoImpl implements CommonDao {
         }
         return count;
     }
+
+    @Override
+    public long facultyCount(String facultyId, String facultyName) {
+        long count = 0;
+        String sql = "select count(*) from faculty where 1=1";
+        if(!facultyId.equals("")){
+            sql += " and coursename like \"%"+facultyId+"%\" ";
+        }
+        if(!facultyName.equals("")){
+            sql += " and facultyid =\""+facultyName+"\"";
+        }
+        try {
+            count = (long)queryRunner.query(DbUtils.getConnection(),sql,new ScalarHandler());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 }

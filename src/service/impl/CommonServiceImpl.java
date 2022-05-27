@@ -54,4 +54,18 @@ public class CommonServiceImpl implements CommonService {
         }
         return count;
     }
+
+    @Override
+    public long facultyCount(String facultyId, String facultyName) {
+        long count = 0;
+        try {
+            DbUtils.begin();
+            count = commonDao.facultyCount(facultyId,facultyName);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return count;
+    }
 }

@@ -161,7 +161,7 @@
     function btnAdd() {
         isSave = "insert"
         $("#infoCourseId").attr("readonly",false)
-        $("#infoModalLabel").html("添加学生信息")
+        $("#infoModalLabel").html("添加课程信息")
         clearModelInfo()
         $('#infoModal').modal('show');
     }

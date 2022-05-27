@@ -12,7 +12,9 @@ import java.util.List;
  */
 public interface FacultyService {
     public Faculty getById(String id);
-    public List<Faculty> getByAll();
+    public List<Faculty> getByAll(int page, int number, String facultyId, String facultyName);
+    public List<Faculty> getByAll_cache();
+    public int insert(Faculty faculty);
     public int update(Faculty faculty);
     public int delete(String id);
 

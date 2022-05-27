@@ -6,6 +6,7 @@ import entity.Faculty;
 import service.FacultyService;
 import utils.DbUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,16 +34,42 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
-    public List<Faculty> getByAll() {
-        List<Faculty> faculty = null;
+    public List<Faculty> getByAll(int page, int number, String facultyId, String facultyName) {
+        List<Faculty> faculty = new ArrayList<Faculty>();
         try {
-            faculty = facultyDao.getByAll();
+            faculty = facultyDao.getByAll(page,number,facultyId,facultyName);
             DbUtils.commit();
         } catch (Exception e) {
             DbUtils.rollback();
             e.printStackTrace();
         }
         return faculty;
+    }
+
+    @Override
+    public List<Faculty> getByAll_cache() {
+        List<Faculty> faculty = null;
+        try {
+            faculty = facultyDao.getByAll_cache();
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return faculty;
+    }
+
+    @Override
+    public int insert(Faculty faculty) {
+        int result = 0;
+        try {
+            result = facultyDao.insert(faculty);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
