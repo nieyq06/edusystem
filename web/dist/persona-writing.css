@@ -3,12 +3,10 @@
 .select, .tablecentent {
     padding-right: 5px;
     padding-left: 5px;
-    display: inline-block;
-    width: calc(100% - 150px);
 }
 
 .row {
-    margin-top: 0;
+    margin-top: 10px;
 }
 
 td > span {

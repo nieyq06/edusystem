@@ -12,7 +12,8 @@
 <head>
     <title>院系信息管理</title>
 </head>
-<body><div class="select">
+<body>
+<div class="select">
     <div class="select-form">
         <div class="row g-3" style="margin-right: 0px">
             <div class="col">
@@ -122,14 +123,14 @@
 
     function btnAdd() {
         isSave = "insert"
-        $("#infoFacultyId").attr("readonly",false)
+        $("#infoFacultyId").attr("readonly", false)
         $("#infoModalLabel").html("添加二级学院信息")
         clearModelInfo()
         $('#infoModal').modal('show');
     }
 
     function clearModelInfo() {
-        setInfoFacultyId="";
+        setInfoFacultyId = "";
         $("#infoFacultyId").val("");
         $("#infoFacultyName").val("");
 
@@ -147,7 +148,7 @@
             sortable: false,   //是否启用排序
 // sortOrder: "asc",   //排序方式
             pageNumber: 1,   //初始化加载第一页，默认第一页
-            pageSize: 15,   //每页的记录行数（*）
+            pageSize: 16,   //每页的记录行数（*）
             url: "/edusystem/admin/safe/getFacultyByAllServlet",//这个接口需要处理bootstrap table传递的固定参数
 
             queryParamsType: '', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
@@ -227,7 +228,7 @@
     //编辑按钮
     function btnEdit(val) {
         $("#infoModalLabel").html("修改院系信息")
-        $("#infoFacultyId").attr("readonly",true)
+        $("#infoFacultyId").attr("readonly", true)
         isSave = "update"
         $('#infoModal').modal('show');
         $.ajax({
@@ -240,7 +241,7 @@
                     setInfoFacultyId = flag.FacultyId;
                     $("#infoFacultyId").val(flag.FacultyId)
                     $("#infoFacultyName").val(flag.FacultyName)
-                }else {
+                } else {
                     model_Msg("#modelMsg", "#mesg", "出差啦，请重试", "alert modal-sm alert-danger", 1000)
 
                 }

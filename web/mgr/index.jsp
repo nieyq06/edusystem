@@ -22,9 +22,9 @@
         <li onclick="tchmgr()">教师信息管理</li>
         <li onclick="stumgr()">学生信息管理</li>
         <li onclick="coursemgr()">课程信息管理</li>
-        <li onclick="titlemgr()">职称信息管理</li>
         <li onclick="facultymgr()">院系信息管理</li>
-        <li onclick="classlocamgr()">授课地点管理</li>
+<%--        <li onclick="titlemgr()">职称信息管理</li>--%>
+<%--        <li onclick="classlocamgr()">授课地点管理</li>--%>
         <li onclick="changepwd()">修改密码</li>
     </ul>
 </div>

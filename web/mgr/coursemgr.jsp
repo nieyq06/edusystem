@@ -187,7 +187,7 @@
             sortable: false,   //是否启用排序
 // sortOrder: "asc",   //排序方式
             pageNumber: 1,   //初始化加载第一页，默认第一页
-            pageSize: 15,   //每页的记录行数（*）
+            pageSize: 16,   //每页的记录行数（*）
             url: "/edusystem/admin/safe/getCourseByAllServlet",//这个接口需要处理bootstrap table传递的固定参数
 
             queryParamsType: '', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
