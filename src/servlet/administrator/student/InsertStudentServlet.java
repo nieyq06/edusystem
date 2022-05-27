@@ -1,4 +1,4 @@
-package servlet.administrator; /**
+package servlet.administrator.student; /**
  * Author: nyq
  * Date：2022/5/26
  * Description: 介绍
@@ -14,8 +14,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "InsertTeacherServlet", value = "/admin/safe/insertTeacherServlet")
-public class InsertTeacherServlet extends HttpServlet {
+@WebServlet(name = "InsertStudentServlet", value = "/admin/safe/insertStudentServlet")
+public class InsertStudentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);
@@ -26,13 +26,14 @@ public class InsertTeacherServlet extends HttpServlet {
         AdminService adminService = new AdminServiceImpl();
         User user = new User();
         user.setUserNo(request.getParameter("UserId").toString());
+
         user.setUserName(request.getParameter("UserName").toString());
         user.setSex(request.getParameter("Sex").toString());
         user.setTel(request.getParameter("Tel").toString());
         user.setFacultyId(request.getParameter("FacultyId").toString());
-        user.setMajorCourse(request.getParameter("CourseId").toString());
+        user.setSubjectId(request.getParameter("SubjectId").toString());
 
-        int result = adminService.insertTeacher(user);
+        int result = adminService.insertStudent(user);
         String res = "{\"res\":\""+result+"\"}";
         response.getWriter().write(res);
     }

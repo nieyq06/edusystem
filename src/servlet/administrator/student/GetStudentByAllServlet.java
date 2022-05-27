@@ -1,4 +1,4 @@
-package servlet.administrator; /**
+package servlet.administrator.student; /**
  * Author: nyq
  * Date：2022/5/26
  * Description: 介绍
@@ -30,7 +30,6 @@ public class GetStudentByAllServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 
         int number = Integer.parseInt(request.getParameter("pageSize"));//每页条数
         int page = Integer.parseInt(request.getParameter("pageNumber"));//页码

@@ -63,7 +63,7 @@ public class AuthorLoginServlet extends HttpServlet {
                 List<Faculty> faculty = facultyService.getByAll();
                 session.setAttribute("faculty", faculty);
                 //获取课程信息
-                List<Course> courses = courseService.getByAll();
+                List<Course> courses = courseService.getByAll_cache();
                 String coursesjson = JSONUtil.toJsonStr(courses);
                 session.setAttribute("courses", coursesjson);
                 //获取所有专业信息

@@ -13,7 +13,8 @@ import java.util.List;
 public interface CourseService {
 
     public Course getById(String id);
-    public List<Course> getByAll();
+    public List<Course> getByAll(int page, int number, String course, String faculty );
+    public List<Course> getByAll_cache();
     public int insert(Course course);
     public int update(Course course);
     public int delete(String id);

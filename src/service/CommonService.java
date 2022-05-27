@@ -9,4 +9,5 @@ package service;
 public interface CommonService {
     public long teacherCount( String selectFuzzy,String faculty);
     public long studentCount( String selectFuzzy,String faculty);
+    public long courseCount( String selectFuzzy,String faculty);
 }

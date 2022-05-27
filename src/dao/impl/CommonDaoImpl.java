@@ -43,7 +43,24 @@ public class CommonDaoImpl implements CommonDao {
         if(!faculty.equals("")){
             sql += " and f.facultyid =\""+faculty+"\"";
         }
-        System.out.println(sql);
+        try {
+            count = (long)queryRunner.query(DbUtils.getConnection(),sql,new ScalarHandler());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public long courseCount(String selectFuzzy, String faculty) {
+        long count = 0;
+        String sql = "select count(*) from course where 1=1";
+        if(!selectFuzzy.equals("")){
+            sql += " and coursename like \"%"+selectFuzzy+"%\" ";
+        }
+        if(!faculty.equals("")){
+            sql += " and facultyid =\""+faculty+"\"";
+        }
         try {
             count = (long)queryRunner.query(DbUtils.getConnection(),sql,new ScalarHandler());
         } catch (SQLException e) {

@@ -1,21 +1,23 @@
-package servlet.administrator; /**
+package servlet.administrator.teacher; /**
  * Author: nyq
- * Date：2022/5/26
+ * Date：2022/5/23
  * Description: 介绍
  * Version： 1.0
  */
 
 import entity.User;
 import service.AdminService;
+import service.TeacherService;
 import service.impl.AdminServiceImpl;
+import service.impl.TeacherServiceImpl;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "UpdateStudentServlet", value = "/admin/safe/updateStudentServlet")
-public class UpdateStudentServlet extends HttpServlet {
+@WebServlet(name = "UpdateTeacherServlet", value = "/admin/safe/updateTeacherServlet")
+public class UpdateTeacherServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);
@@ -31,11 +33,10 @@ public class UpdateStudentServlet extends HttpServlet {
         user.setSex(request.getParameter("infoSex"));
         user.setTel(request.getParameter("infoTel"));
         user.setFacultyId(request.getParameter("infoFaculty"));
-        user.setSubjectId(request.getParameter("infoSubject"));
-        int result= adminService.updateStudent(user);
+        user.setMajorCourse(request.getParameter("infoCourse"));
+        int result= adminService.updateTeacher(user);
 
         String res = "{\"res\":\""+result+"\"}";
         response.getWriter().write(res);
-
     }
 }

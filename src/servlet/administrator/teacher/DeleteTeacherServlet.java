@@ -1,4 +1,4 @@
-package servlet.administrator; /**
+package servlet.administrator.teacher; /**
  * Author: nyq
  * Date：2022/5/23
  * Description: 介绍

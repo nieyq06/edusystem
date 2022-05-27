@@ -4,9 +4,11 @@ import dao.CourseDao;
 import dao.impl.CourseDaoImpl;
 import entity.Course;
 import entity.Faculty;
+import entity.TeacherInfo;
 import service.CourseService;
 import utils.DbUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,14 +21,43 @@ public class CourseServiceImpl implements CourseService {
     CourseDao courseDao = new CourseDaoImpl();
     @Override
     public Course getById(String id) {
-        return null;
+        Course result= null;
+        try {
+            DbUtils.begin();
+            Course temp = courseDao.getById(id);
+            if(temp!=null){
+                result = temp;
+            }
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
-    public List<Course> getByAll() {
+    public List<Course> getByAll(int page, int number, String course, String faculty) {
+        List<Course> courses = new ArrayList<>();
+        try {
+            DbUtils.begin();
+            List<Course> temps = courseDao.getByAll(page,number,course,faculty);
+            if (temps!=null){
+                courses = temps;
+            }
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return courses;
+    }
+
+    @Override
+    public List<Course> getByAll_cache() {
         List<Course> courses = null;
         try {
-            courses = courseDao.getByAll();
+            courses = courseDao.getByAll_cache();
             DbUtils.commit();
         } catch (Exception e) {
             DbUtils.rollback();
@@ -37,16 +68,43 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public int insert(Course course) {
-        return 0;
+        int result = 0;
+        try {
+            DbUtils.begin();
+            result = courseDao.insert(course);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
     public int update(Course course) {
-        return 0;
+        int result = 0;
+        try {
+            DbUtils.begin();
+            result = courseDao.update(course);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
     public int delete(String id) {
-        return 0;
+        int result = 0;
+        try {
+            DbUtils.begin();
+            result = courseDao.delete(id);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;
     }
 }

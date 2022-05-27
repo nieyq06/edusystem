@@ -38,5 +38,20 @@ public class CommonServiceImpl implements CommonService {
             DbUtils.rollback();
             e.printStackTrace();
         }
-        return count;    }
+        return count;
+    }
+
+    @Override
+    public long courseCount(String selectFuzzy, String faculty) {
+        long count = 0;
+        try {
+            DbUtils.begin();
+            count = commonDao.courseCount(selectFuzzy,faculty);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return count;
+    }
 }
