@@ -71,7 +71,6 @@ public class AuthorLoginServlet extends HttpServlet {
                 String subjectsjson = JSONUtil.toJsonStr(subjects);
                 session.setAttribute("subjects", subjectsjson);
 
-
                 //登录成功后返回角色id
                 String res = "{\"role\":\"" + user.getRoleId() + "\",\"u\":\"0\"}";
                 response.getWriter().write(res);

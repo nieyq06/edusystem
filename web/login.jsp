@@ -101,8 +101,8 @@
             success:function (flag){
                 console.log(flag)
                 if(flag.u=="0"&&flag.role=="1"){
-                    // window.location.href = "/edusystem/mgr/index.jsp"; // 路由跳转到管理员首页
-                    window.location.href = "/edusystem/mgr/index_.jsp"; // 路由跳转到管理员首页
+                    window.location.href = "/edusystem/mgr/index.jsp"; // 路由跳转到管理员首页
+                    // window.location.href = "/edusystem/mgr/index__.jsp"; // 路由跳转到管理员首页
                 }else if(flag.u=="0"&&flag.role=="2"){
                     window.location.href = "/edusystem/tch/index.jsp";
                 }else if(flag.u=="0"&&flag.role=="3"){
