@@ -27,7 +27,7 @@ public class UserUpdatePwdServlet extends HttpServlet {
         String oldPwd = request.getParameter("oldPwd");
         CommonService commonService = new CommonServiceImpl();
         int result = commonService.userUpdatePwd(newPwd,oldPwd,userNo);
-        String res = "{\"res\":\"" + result + "}";
+        String res = "{\"res\":\"" + result + "\"}";
         response.getWriter().write(res);
 
     }

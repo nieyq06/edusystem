@@ -25,7 +25,6 @@ public class CreateCodeServlet extends HttpServlet {
         String codes = validateCode.getCode();
         HttpSession session = request.getSession();
         session.setAttribute("codes",codes);
-        System.out.println(codes);
         //将验证码图片响应给前端
         validateCode.write(response.getOutputStream());
     }

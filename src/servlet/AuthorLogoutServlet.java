@@ -20,7 +20,6 @@ public class AuthorLogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        System.out.println("进入 logout.do 请求");
         session.removeAttribute("user");
         session.invalidate(); //设置session 失效
         String res = "{\"status\":\"logout\"}";
