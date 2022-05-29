@@ -2,6 +2,7 @@ package service.impl;
 
 import dao.CommonDao;
 import dao.impl.CommonDaoImpl;
+import entity.User;
 import service.CommonService;
 import utils.DbUtils;
 
@@ -67,5 +68,33 @@ public class CommonServiceImpl implements CommonService {
             e.printStackTrace();
         }
         return count;
+    }
+
+    @Override
+    public int userInfoUpdate(User user, String role) {
+        int result = 0;
+        try {
+            DbUtils.begin();
+            result = commonDao.userInfoUpdate(user,role);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public int userUpdatePwd(String newPwd, String oldPwd, String uno) {
+        int result = 0;
+        try {
+            DbUtils.begin();
+            result = commonDao.userUpdatePwd(newPwd,oldPwd,uno);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;
     }
 }

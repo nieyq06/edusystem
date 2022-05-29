@@ -99,7 +99,7 @@
         <div class="dropdown">
             <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
                data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                <img src="/edusystem/img/i.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
                 <strong id="username">
                     <% User user = (User)session.getAttribute("user");
                     if (user==null){
@@ -111,7 +111,7 @@
                 </strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                <li><a class="dropdown-item" >个人信息</a></li>
+                <li><a class="dropdown-item" onclick="userInfo()">个人信息</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -123,6 +123,130 @@
     <div id="section" class="section"></div>
 </main>
 
+
+<div class="modal fade" id="userInfoModel" tabindex="-1" aria-labelledby="uerInfoModelLable" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uerInfoModelLable"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="needs-validation" novalidate>
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label for="infoNo" class="col-sm-2 col-form-label">管理员账号</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="infoNo" id="infoNo"
+                                   ria-label="管理员账号" required readonly>
+                            <div class="invalid-feedback">
+                                没有账号你咋登录？
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="infoName" class="col-sm-2 col-form-label">管理员姓名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="infoName" id="infoName"
+                                   ria-label="管理员姓名" required readonly>
+                            <div class="invalid-feedback">
+                                你还想匿名不成？
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="infoMan" class="col-sm-2 col-form-label">性别</label>
+                        <div class="col-sm-10">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="infoSex" id="infoMan" value="男" disabled>
+                                <label class="form-check-label" for="infoMan">
+                                    男
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="infoSex" id="infoWomen" value="女" disabled>
+                                <label class="form-check-label" for="infoWomen">
+                                    女
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="infoTel" class="col-sm-2 col-form-label">电话</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="infoTel" id="infoTel" ria-label="电话" required>
+                            <div class="invalid-feedback">
+                                电话不能为空
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-success" onclick="btnUserInfoSave()">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updatePwdModel" tabindex="-1" aria-labelledby="updatePwdModelLable" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updatePwdModelTitle">修改密码</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form novalidate>
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label for="oldPwd" class="col-sm-2 col-form-label">原密码</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="oldPwd" id="oldPwd"
+                                   ria-label="原密码" required readonly>
+                            <div class="invalid-feedback">
+                                原密码有误！
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="newPwd" class="col-sm-2 col-form-label">新密码</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="newPwd" id="newPwd"
+                                   ria-label="新密码" required readonly>
+                            <div class="invalid-feedback">
+                                新密码不能空
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="confirmPwd" class="col-sm-2 col-form-label">确认密码</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="confirmPwd" id="confirmPwd" ria-label="确认密码" required>
+                            <div class="invalid-feedback">
+                                两次密码不一致
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-success" onclick="btnRevise()">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<%--信息提示框--%>
+<div class="modal fade" tabindex="-1" role="dialog" id="modelInfoMsg" backdrop="static">
+    <div class="modal-dialog modal-sm " role="document">
+        <div id="infoMsg" style="text-align: center;">
+        </div>
+    </div>
+</div>
 
 <script src="../dist/jquery/jquery-3.5.1.min.js"></script>
 <script src="../dist/js/bootstrap.js"></script>
@@ -137,6 +261,47 @@
 </html>
 <script>
     onload = home()
+    function btnUserInfoSave(){
+        var user = ${sessionScope.userInfo}
+        var tel = $("#infoTel").val()
+        console.log(tel)
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url:"/edusystem/userInfoUpdateServlet",
+            data:{"no":user.UserNo,"pwd":user.Password,"tel":tel,"role":"admin"},
+            success:function(flag){
+                console.log(flag)
+                if (flag.res == "1") {
+                    $('#userInfoModel').modal('hide');
+                    model_Msg("#modelInfoMsg", "#infoMsg", "修改成功", "alert modal-sm alert-success", 1000)
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    model_Msg("#modelInfoMsg", "#infoMsg", "修改失败", "alert modal-sm alert-danger", 1000)
+                }
+            }
+        })
+    }
+    function revisePwd(){
+
+    }
+
+    function userInfo(){
+        $("#uerInfoModelLable").html("个人信息")
+        $('#userInfoModel').modal('show');
+        $("#infoTel").val()
+
+        var user = ${sessionScope.userInfo}
+            console.log(user)
+        $("#infoNo").val(user.UserNo)
+        $("#infoName").val(user.UserName)
+        $("input[name='infoSex'][value=" + user.Sex + "]").attr("checked", true)
+        $("#infoTel").val(user.Tel)
+
+    }
+
 
     function logout(){
         $.ajax({
@@ -189,7 +354,23 @@
         $("#facultyinfo").attr("class", "nav-link active")
         $("#section").load("facultymgr.jsp");
     }
-
+    // 如果存在无效字段，则用于禁用表单提交的示例启动器 JavaScript
+    (function () {
+        'use strict'
+        // 获取我们想要应用自定义 Bootstrap 验证样式的所有表单
+        var form = document.querySelectorAll('.needs-validation')
+        // 循环它们并防止提交
+        Array.prototype.slice.call(form)
+            .forEach(function (form) {
+                form.addEventListener('click', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
 </script>
 <style>
     li:hover{

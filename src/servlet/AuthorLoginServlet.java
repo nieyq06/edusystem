@@ -41,9 +41,7 @@ public class AuthorLoginServlet extends HttpServlet {
         //System.out.println(username+":"+password+":"+inputVcode);
         //2.校验验证码
         String codes = (String) request.getSession().getAttribute("codes");
-        System.out.println(userno+"\t"+password+"\t"+inputVcode);
-        System.out.println("验证码");
-        System.out.println(codes);
+
         if (!inputVcode.isEmpty() && inputVcode.equalsIgnoreCase(codes)) {
             //调用业务逻辑实现登录
             AuthorService authorService = new AuthorServiceImpl();
@@ -52,13 +50,15 @@ public class AuthorLoginServlet extends HttpServlet {
             SubjectService subjectService = new SubjectServiceImpl();
 
             User user = authorService.login(userno, password);
-            System.out.println(user);
             if (user != null) {
                 //登录成功
                 //存储在session作用域
                 //获取用户
                 HttpSession session = request.getSession();
+                String userjson = JSONUtil.toJsonStr(user);
+
                 session.setAttribute("user", user);
+                session.setAttribute("userInfo",userjson);
                 //获取二级学院信息
                 List<Faculty> faculty = facultyService.getByAll_cache();
                 session.setAttribute("faculty", faculty);

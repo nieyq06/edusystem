@@ -31,7 +31,5 @@ public class GetTeacherByIdServlet extends HttpServlet {
         TeacherInfo tch = adminService.getTeacherById(id);
         String json_tch = JSONUtil.toJsonStr(tch);
         response.getWriter().write(json_tch);
-        System.out.println(json_tch);
-
     }
 }

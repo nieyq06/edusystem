@@ -1,7 +1,9 @@
 package dao.impl;
 
 import dao.CommonDao;
+import entity.User;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import utils.DbUtils;
 
@@ -85,5 +87,39 @@ public class CommonDaoImpl implements CommonDao {
             e.printStackTrace();
         }
         return count;
+    }
+
+    public int userInfoUpdate(User user,String role){
+        int result = 0;
+        try {
+            if(role.equals("admin")){
+                String sql = "update user set tel=? where userno=? ";
+                result = queryRunner.update(DbUtils.getConnection(),sql,user.getTel(),user.getUserNo());
+            }else if(role.equals("tch")){
+
+            }else if(role.equals("stu")){
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public int userUpdatePwd(String newPwd, String oldPwd, String uno) {
+        int result = 0;
+        try {
+            String select = "select * from user where userno=? and password=?";
+            User user = queryRunner.query(DbUtils.getConnection(),select,new BeanHandler<User>(User.class),uno,oldPwd);
+            if(user!=null){
+                String sql = "update user set password=? where userno=?";
+                result = queryRunner.update(DbUtils.getConnection(),sql,newPwd,uno);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }
