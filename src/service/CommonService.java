@@ -1,6 +1,9 @@
 package service;
 
+import entity.Course;
 import entity.User;
+
+import java.util.List;
 
 /**
  * Author: nyq
@@ -15,4 +18,7 @@ public interface CommonService {
     public long facultyCount( String facultyId,String facultyName);
     public int userInfoUpdate(User user, String role);
     public int userUpdatePwd(String newPwd,String oldPwd,String uno);
+
+    public long getCourseAllByTeacherId( String course, String teacherNo);
+
 }

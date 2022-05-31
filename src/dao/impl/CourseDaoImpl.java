@@ -22,7 +22,7 @@ public class CourseDaoImpl implements CourseDao {
     private QueryRunner queryRunner = new QueryRunner();
     @Override
     public Course getById(String id) {
-        String sql = "select c.courseid,c.coursename,c.credit,c.facultyid,f.facultyid from course c join faculty f on c.facultyid=f.facultyid where c.courseid=?";
+        String sql = "select c.courseid,c.coursename,c.credit,c.facultyid,c.teacherno,f.facultyid from course c join faculty f on c.facultyid=f.facultyid where c.courseid=?";
         try {
             Course course = queryRunner.query(DbUtils.getConnection(),sql, new BeanHandler<Course>(Course.class),id);
             return course;
@@ -35,7 +35,7 @@ public class CourseDaoImpl implements CourseDao {
     @Override
     public List<Course> getByAll(int page, int number, String course, String faculty) {
         int _page = (page-1) * 15;
-        String sql = "select c.courseid,c.coursename,c.credit,c.facultyid,f.facultyname from course c join faculty f on c.facultyid=f.facultyid where 1=1";
+        String sql = "select c.courseid,c.coursename,c.credit,c.facultyid,c.teacherno,f.facultyname from course c join faculty f on c.facultyid=f.facultyid where 1=1";
 
         if(!course.equals("")){
             sql += " and c.coursename like \"%"+course+"%\" ";
@@ -69,9 +69,9 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public int insert(Course course) {
-        String sql = "insert into course(courseid,coursename,credit,facultyid) values(?,?,?,?)";
+        String sql = "insert into course(courseid,coursename,credit,facultyid,teacherno) values(?,?,?,?,?)";
         try {
-            int result = queryRunner.update(DbUtils.getConnection(),sql,course.getCourseId(),course.getCourseName(),course.getCredit(),course.getFacultyId());
+            int result = queryRunner.update(DbUtils.getConnection(),sql,course.getCourseId(),course.getCourseName(),course.getCredit(),course.getFacultyId(),course.getTeacherNo());
             return result;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,14 +81,28 @@ public class CourseDaoImpl implements CourseDao {
 
     @Override
     public int update(Course course) {
-        String sql = "update course set coursename=?,credit=?,facultyid=? where courseid=?";
+        String sql = "update course set coursename=?,credit=?,facultyid=?,teacherno=? where courseid=?";
         try {
-            int result = queryRunner.update(DbUtils.getConnection(),sql,course.getCourseName(),course.getCredit(),course.getFacultyId(),course.getCourseId());
+            int result = queryRunner.update(DbUtils.getConnection(),sql,course.getCourseName(),course.getCredit(),course.getFacultyId(),course.getTeacherNo(),course.getCourseId());
             return result;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    @Override
+    public int updateAtTch(Course course) {
+        System.out.println(course);
+        String sql = "update course set coursename=?,credit=?,facultyid=?,teacherno=? where courseid=?";
+        try {
+            int result = queryRunner.update(DbUtils.getConnection(),sql,course.getCourseName(),course.getCredit(),course.getFacultyId(),course.getTeacherNo(),course.getCourseId());
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+
     }
 
     @Override
@@ -101,5 +115,24 @@ public class CourseDaoImpl implements CourseDao {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    @Override
+    public List<Course> getAllByTeacherNo(int page, int number, String course, String teacherNo) {
+        int _page = (page-1) * 15;
+        String sql = "select c.courseid,c.coursename,c.credit,c.facultyid,f.facultyname from course c join faculty f on c.facultyid=f.facultyid where 1=1";
+
+        if(!course.equals("")){
+            sql += " and c.coursename like \"%"+course+"%\" ";
+        }
+        sql +=" and c.teacherno=? limit ?,?";
+        System.out.println(sql);
+        try {
+            List<Course> courses = queryRunner.query(DbUtils.getConnection(),sql, new BeanListHandler<Course>(Course.class),teacherNo,_page,number);
+            return courses;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

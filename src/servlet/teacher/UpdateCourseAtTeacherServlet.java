@@ -1,6 +1,6 @@
-package servlet.administrator.course; /**
+package servlet.teacher; /**
  * Author: nyq
- * Date：2022/5/27
+ * Date：2022/5/30
  * Description: 介绍
  * Version： 1.0
  */
@@ -14,12 +14,11 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "UpdateCourseServlet", value = "/admin/safe/updateCourseServlet")
-//web/WEB-INF/classes/servlet/administrator/course/UpdateCourseServlet.class
-public class UpdateCourseServlet extends HttpServlet {
+@WebServlet(name = "UpdateCourseAtTeacherServlet", value = "/tch/updateCourseAtTeacherServlet")
+public class UpdateCourseAtTeacherServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+doPost(request,response);
     }
 
     @Override
@@ -30,7 +29,7 @@ public class UpdateCourseServlet extends HttpServlet {
         course.setCourseName((String) request.getParameter("infoCourseName"));
         course.setFacultyId((String) request.getParameter("infoFacultyId"));
         course.setCredit(Double.parseDouble(request.getParameter("infoCredit")));
-        course.setTeacherNo((String)request.getParameter("infoTeacherNo"));
+        course.setTeacherNo( (String) request.getParameter("infoTeacherNo"));
         int result = courseService.update(course);
         String res = "{\"res\":\""+result+"\"}";
         response.getWriter().write(res);

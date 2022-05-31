@@ -2,39 +2,28 @@
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: nyq
-  Date: 2022/5/18
-  Time: 0:21
-  Introduction: 课程管理
+  Date: 2022/5/30
+  Time: 10:56
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>课程信息管理</title>
+    <title>开设新课</title>
 </head>
 <body>
 <div class="select-form">
     <div class="row g-3" style="margin-right: 0px">
         <div class="col">
-            <input type="text" class="form-control" name="selectFuzzy" id="selectFuzzy" placeholder="模糊搜索">
+            <input type="text" class="form-control" name="selectFuzzy" id="selectFuzzy" placeholder="课程名称">
         </div>
-        <div class="col-3">
-            <select class="form-select" name="selectFaculty" id="selectFaculty" aria-label="选择院系">
-                <option selected value="">选择院系</option>
-                <% List<Faculty> faculty = (List<Faculty>) session.getAttribute("faculty");
-                    for (Faculty f : faculty) {
-                %>
-                <option value="<%=f.getFacultyId()%>"><%=f.getFacultyName()%>
-                </option>
-                <% }%>
-            </select>
-        </div>
+
         <div class="col-6">
             <button type="button" class="btn btn-success" id="btnSelect"> 搜索</button>
-            <button type="button" class="btn btn-success btn-float-r" id="btnOutput" onclick="fileOutput"> 导出
-            </button>
-            <button type="button" class="btn btn-info btn-float-r" id="btnImport" onclick="fileImport()"> 导入
-            </button>
+<%--            <button type="button" class="btn btn-success btn-float-r" id="btnOutput" onclick="fileOutput"> 导出--%>
+<%--            </button>--%>
+<%--            <button type="button" class="btn btn-info btn-float-r" id="btnImport" onclick="fileImport()"> 导入--%>
+<%--            </button>--%>
             <button type="button" class="btn btn-warning btn-float-r" id="btnAdd" onclick="btnAdd()"> 添加
             </button>
         </div>
@@ -50,7 +39,6 @@
     </div>
 </table>
 
-
 <!-- 修改 -->
 <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -62,55 +50,41 @@
             <form class="needs-validation" novalidate>
                 <div class="modal-body">
                     <div class="mb-3 row">
-                        <label for="infoCourseId" class="col-sm-2 col-form-label">课程ID</label>
+                        <label for="inputCourseId" class="col-sm-2 col-form-label">课程ID</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="infoCourseId" id="infoCourseId"
+                            <input type="text" class="form-control" name="inputCourseId" id="inputCourseId"
                                    ria-label="课程ID" required>
                             <div class="invalid-feedback">
-                                二级学院不能为空
+                                课程ID不能为空
                             </div>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="infoCourseName" class="col-sm-2 col-form-label">课程名称</label>
+                        <label for="inputCourseName" class="col-sm-2 col-form-label">课程名称</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="infoCourseName" id="infoCourseName"
+                            <input type="text" class="form-control" name="inputCourseName" id="inputCourseName"
                                    ria-label="课程名称" required>
                             <div class="invalid-feedback">
                                 课程名称不能为空
                             </div>
                         </div>
                     </div>
-
                     <div class="mb-3 row">
-                        <label for="infoCredit" class="col-sm-2 col-form-label">学分</label>
+                        <label for="inputCredit" class="col-sm-2 col-form-label">学分</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="infoCredit" id="infoCredit" ria-label="电话"
-                                   required>
+                            <input type="text" class="form-control" name="inputCredit" id="inputCredit"
+                                   ria-label="学分" required>
                             <div class="invalid-feedback">
                                 学分不能为空
                             </div>
                         </div>
                     </div>
-
                     <div class="mb-3 row">
-                        <label for="infoTeacherId" class="col-sm-2 col-form-label">任课教师编号</label>
+                        <label for="inputFaculty" class="col-sm-2 col-form-label">所属院系</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="infoTeacherId" id="infoTeacherId" ria-label="任课教师编号"
-                                   required>
-                            <div class="invalid-feedback">
-                                任课教师不能为空
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3 row">
-                        <label for="infoFaculty" class="col-sm-2 col-form-label">所属二级学院</label>
-                        <div class="col-sm-10">
-                            <select class="form-select" aria-label="选择二级学院" id="infoFaculty" name="infoFaculty"
-                                    ria-label="二级学院" required>
-                                <option selected value="">选择二级学院</option>
-                                <%
+                            <select class="form-select" name="inputFaculty" id="inputFaculty" aria-label="选择院系" required>
+                                <option selected value="">选择院系</option>
+                                <% List<Faculty> faculty = (List<Faculty>) session.getAttribute("faculty");
                                     for (Faculty f : faculty) {
                                 %>
                                 <option value="<%=f.getFacultyId()%>"><%=f.getFacultyName()%>
@@ -118,7 +92,7 @@
                                 <% }%>
                             </select>
                             <div class="invalid-feedback">
-                                二级学院不能为空
+                                所属院系不能为空
                             </div>
                         </div>
                     </div>
@@ -148,7 +122,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p><em id="delCourse"></em> | <em id="delCourseName"></em></p>
+                <p><em id="delFaculty"></em> | <em id="delFacultyName"></em></p>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-danger" data-bs-dismiss="modal" onclick="isDelete()">确认删除</button>
@@ -160,30 +134,28 @@
 </html>
 <script>
     onload = getAll()
-    var setInfoCourseId = ""
+    var setCourseId = ""
     var setDeleteUserId = ""
     var isSave = "";//保存按钮状态
 
     function btnAdd() {
         isSave = "insert"
-        $("#infoCourseId").attr("readonly", false)
-        $("#infoModalLabel").html("添加课程信息")
+        $("#infoFacultyId").attr("readonly", false)
+        $("#infoModalLabel").html("添加开设课程")
         clearModelInfo()
         $('#infoModal').modal('show');
     }
 
     function clearModelInfo() {
-        setInfoCourseId = "";
-        $("#infoCourseId").val("");
-        $("#infoCourseName").val("");
-        $("#infoTeacherId").val("");
+        setCourseId = "";
+        $("#infoFacultyId").val("");
+        $("#infoFacultyName").val("");
 
-        $("#infoCredit").val("");
-        $("#infoFaculty").val("", "选择二级学院");
     }
 
     // 获取所有课程信息
     function getAll() {
+        var user = ${sessionScope.userInfo}
         showLoading();
         $('#table').bootstrapTable('destroy');
         $('#table').bootstrapTable({
@@ -195,7 +167,7 @@
 // sortOrder: "asc",   //排序方式
             pageNumber: 1,   //初始化加载第一页，默认第一页
             pageSize: 16,   //每页的记录行数（*）
-            url: "/edusystem/admin/safe/getCourseByAllServlet",//这个接口需要处理bootstrap table传递的固定参数
+            url: "/edusystem//tch/getCourseByTeacherIdServlet",//这个接口需要处理bootstrap table传递的固定参数
 
             queryParamsType: '', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
 // 设置为 '' 在这种情况下传给服务器的参数为：pageSize,pageNumber
@@ -214,8 +186,8 @@
                 return {
                     pageSize: params.pageSize,                     // 每页记录条数
                     pageNumber: params.pageNumber,                 // 当前页索引
-                    selectFuzzy: $('#selectFuzzy').val(),                        // 模糊搜索
-                    selectFaculty: $('#selectFaculty').val()                     // 院系
+                    course: $('#selectFuzzy').val(),                        // 模糊搜索
+                    teacherNo:user.UserNo
                 };
             },
 
@@ -259,8 +231,8 @@
                         btnEdit(row.CourseId)
                     },
                     'click #delete': function (e, value, row, index) {
-                        $("#delCourse").html(row.CourseId)
-                        $("#delCourseName").html(row.CourseName)
+                        $("#delFaculty").html(row.CourseId)
+                        $("#delFacultyName").html(row.CourseName)
                         btnDelete(row.CourseId);
                     }
                 },
@@ -283,25 +255,28 @@
 
     //编辑按钮
     function btnEdit(val) {
+        console.log(val)
         $("#infoModalLabel").html("修改课程信息")
-        $("#infoCourseId").attr("readonly", true)
+        $("#infoFacultyId").attr("readonly", true)
         isSave = "update"
         $('#infoModal').modal('show');
         $.ajax({
             type: "get",
             dataType: "json",
-            url: "${pageContext.request.contextPath}/admin/safe/getCourseByIdServlet",
+            url: "${pageContext.request.contextPath}/tch/getCourseInfoServlet",
             data: {"courseId": val},
             success: function (flag) {
                 console.log(flag)
                 if (flag != null) {
-                    setInfoCourseId = flag.CourseId;
-                    $("#infoCourseId").val(flag.CourseId)
-                    $("#infoCourseName").val(flag.CourseName)
-                    $("#infoTeacherId").val(flag.TeacherNo)
+                    setCourseId = flag.CourseId;
+                    $("#inputCourseId").val(flag.CourseId)
+                    $("#inputCourseName").val(flag.CourseName)
+                    $("#inputCredit").val(flag.Credit)
+                    $("#inputFaculty").val(flag.FacultyId, flag.FacultyName);
+                    $("#inputCourseIntroduce").val(flag.CourseIntroduce)
+                } else {
+                    model_Msg("#modelMsg", "#mesg", "出差啦，请重试", "alert modal-sm alert-danger", 1000)
 
-                    $("#infoCredit").val(flag.Credit)
-                    $("#infoFaculty").val(flag.FacultyId, flag.FacultyName);
                 }
             }
         });
@@ -309,25 +284,40 @@
 
     //保存按钮
     function btnSave() {
-        let infoCourseName = document.getElementById("infoCourseName").value
-        let infoCredit = document.getElementById("infoCredit").value
-        let infoTeacherId = document.getElementById("infoTeacherId").value
-        console.log(infoTeacherId)
+        console.log(setCourseId)
+        let user = ${sessionScope.userInfo};
+        let infoTeacherNo = user.UserNo;
+        let infoCourseName = document.getElementById("inputCourseName").value
+        let infoFacultyId = document.getElementById("inputFaculty").value
+        console.log(infoFacultyId)
+        let infoCredit = document.getElementById("inputCredit").value
+        if(infoTeacherNo==""||infoTeacherNo==null||infoCourseName==""||infoCourseName==null
+            ||infoFacultyId==""||infoFacultyId==null||infoCredit==""||infoCredit==null){
+            return
+        }
 
-        let infoFaculty = document.getElementById("infoFaculty").value
         if (isSave == "update") {
+            $("#inputCourseId").attr("readonly", true)
             $.ajax({
                 method: "post",
                 dataType: "json",
-                url: "/edusystem/admin/safe/updateCourseServlet",
+                url: "/edusystem/tch/updateCourseAtTeacherServlet",
                 data: {
-                    "infoCourseId": setInfoCourseId,
+
+                    // "infoCourseId": setInfoCourseId,
+                    // "infoCourseName": infoCourseName,
+                    // "infoFacultyId": infoFaculty,
+                    // "infoCredit": infoCredit,
+                    // "infoTeacherNo": infoTeacherId,
+
+                    "infoCourseId": setCourseId,
+                    "infoTeacherId": infoTeacherId,
                     "infoCourseName": infoCourseName,
-                    "infoFacultyId": infoFaculty,
+                    "infoFacultyId": infoFacultyId,
                     "infoCredit": infoCredit,
-                    "infoTeacherNo": infoTeacherId,
                 },
                 success: function (flag) {
+                    console.log(flag)
                     if (flag.res == "1") {
                         $('#infoModal').modal('hide');
                         getAll();
@@ -339,17 +329,21 @@
             })
         }
         if (isSave == "insert") {
-            let infoCourseId = document.getElementById("infoCourseId").value;
+            $("#inputCourseId").attr("readonly", false)
+            let inputCourseId = document.getElementById("inputCourseId").value;
+            if(inputCourseId==null||inputCourseId==""){
+                return;
+            }
             $.ajax({
                 method: "post",
                 dataType: "json",
                 url: "/edusystem/admin/safe/insertCourseServlet",
                 data: {
-                    "CourseId": infoCourseId,
+                    "CourseId": inputCourseId,
                     "CourseName": infoCourseName,
-                    "FacultyId": infoFaculty,
+                    "FacultyId": infoFacultyId,
                     "Credit": infoCredit,
-                    "TeacherNo": infoTeacherId,
+                    "TeacherNo": infoTeacherNo,
                 },
                 success: function (flag) {
                     if (flag.res == "1") {
@@ -363,6 +357,7 @@
             })
         }
     }
+
 
     //删除按钮
     function btnDelete(val, no, name) {
@@ -422,4 +417,3 @@
         text-align: center;
     }
 </style>
-

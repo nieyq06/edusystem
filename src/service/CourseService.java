@@ -18,4 +18,7 @@ public interface CourseService {
     public int insert(Course course);
     public int update(Course course);
     public int delete(String id);
+
+    public List<Course> getAllByTeacherNo(int page, int number, String course, String teacherNo);
+
 }

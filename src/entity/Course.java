@@ -11,7 +11,9 @@ public class Course {
     private String CourseName;//课程名
     private String FacultyId;//二级学院id
     private double Credit;//学分
-    private String FacultyName;
+    private String FacultyName;//二级学院
+    private String TeacherNo;//教师id
+    private String TeacherName;//教师姓名
 
     public String getCourseId() {
         return CourseId;
@@ -53,12 +55,30 @@ public class Course {
         FacultyName = facultyName;
     }
 
-    public Course(String courseId, String courseName, String facultyId, double credit, String facultyName) {
+    public String getTeacherNo() {
+        return TeacherNo;
+    }
+
+    public void setTeacherNo(String teacherNo) {
+        TeacherNo = teacherNo;
+    }
+
+    public String getTeacherName() {
+        return TeacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        TeacherName = teacherName;
+    }
+
+    public Course(String courseId, String courseName, String facultyId, double credit, String facultyName, String teacherNo, String teacherName) {
         CourseId = courseId;
         CourseName = courseName;
         FacultyId = facultyId;
         Credit = credit;
         FacultyName = facultyName;
+        TeacherNo = teacherNo;
+        TeacherName = teacherName;
     }
 
     public Course() {

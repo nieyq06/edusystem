@@ -2,9 +2,12 @@ package service.impl;
 
 import dao.CommonDao;
 import dao.impl.CommonDaoImpl;
+import entity.Course;
 import entity.User;
 import service.CommonService;
 import utils.DbUtils;
+
+import java.util.List;
 
 /**
  * Author: nyq
@@ -96,5 +99,19 @@ public class CommonServiceImpl implements CommonService {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public long getCourseAllByTeacherId( String course, String teacherNo) {
+        long count = 0;
+        try {
+            DbUtils.begin();
+            count = commonDao.courseCountByTeacherNo(course,teacherNo);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return count;
     }
 }

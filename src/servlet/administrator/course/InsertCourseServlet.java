@@ -28,10 +28,18 @@ public class InsertCourseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CourseService courseService = new CourseServiceImpl();
         Course course = new Course();
-        course.setCourseId(request.getParameter("CourseId").toString());
-        course.setCourseName(request.getParameter("CourseName").toString());
-        course.setFacultyId(request.getParameter("FacultyId").toString());
-        course.setCredit( Double.parseDouble(request.getParameter("Credit").toString()));
+        System.out.println((String) request.getParameter("CourseId"));
+        System.out.println((String) request.getParameter("CourseName"));
+        System.out.println((String) request.getParameter("FacultyId"));
+        System.out.println((String) request.getParameter("Credit"));
+        System.out.println((String) request.getParameter("TeacherNo"));
+
+
+        course.setCourseId( (String) request.getParameter("CourseId"));
+        course.setCourseName( (String) request.getParameter("CourseName"));
+        course.setFacultyId( (String) request.getParameter("FacultyId"));
+        course.setCredit( Double.parseDouble(request.getParameter("Credit")));
+        course.setTeacherNo( (String) request.getParameter("TeacherNo"));
 
         int result = courseService.insert(course);
         String res = "{\"res\":\""+result+"\"}";

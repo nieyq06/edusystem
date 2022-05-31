@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>管理员首页</title>
+    <title>教师页面</title>
     <link href="../dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../dist/persona-writing.css" rel="stylesheet">
     <link href="../dist/css/sidebars.css" rel="stylesheet">
@@ -43,7 +43,6 @@
     </symbol>
 </svg>
 
-
 <main>
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
         <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -63,35 +62,35 @@
                 </a>
             </li>
             <li>
-                <a class="nav-link text-white" id="tchinfo" onclick="tchmgr()">
+                <a class="nav-link text-white" id="tchinfo" onclick="ksxk()">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="#people"/>
                     </svg>
-                    教师信息
+                    开设新课
                 </a>
             </li>
             <li>
-                <a class="nav-link text-white" id="stuinfo" onclick="stumgr()">
+                <a class="nav-link text-white" id="stuinfo" onclick="cjlr()">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="#people"/>
                     </svg>
-                    学生信息
+                    成绩录入
                 </a>
             </li>
             <li>
-                <a class="nav-link text-white" id="courseinfo" onclick="coursemgr()">
+                <a class="nav-link text-white" id="courseinfo" onclick="xkxsgl()">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="#book"/>
                     </svg>
-                    课程信息
+                    选课学生管理
                 </a>
             </li>
             <li>
-                <a class="nav-link text-white" id="facultyinfo" onclick="facultymgr()">
+                <a class="nav-link text-white" id="facultyinfo" onclick="dybjxsxx()">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="#building"/>
                     </svg>
-                    院系信息
+                    打印班级学生信息
                 </a>
             </li>
         </ul>
@@ -400,32 +399,32 @@
         $("#section").load("home.jsp");
     }
 
-    //教师管理
-    function tchmgr() {
+    //开设课程
+    function ksxk() {
         clearClass()
         $("#tchinfo").attr("class", "nav-link active")
-        $("#section").load("tchmgr.jsp");
+        $("#section").load("ksxk.jsp");
     }
 
-    //学生管理
-    function stumgr() {
+    //成绩录入
+    function cjlr() {
         clearClass()
         $("#stuinfo").attr("class", "nav-link active")
-        $("#section").load("stumgr.jsp");
+        $("#section").load("cjlr.jsp");
     }
 
-    //课程管理
-    function coursemgr() {
+    //选课学生管理
+    function xkxsgl() {
         clearClass()
         $("#courseinfo").attr("class", "nav-link active")
-        $("#section").load("coursemgr.jsp");
+        $("#section").load("xkxsgl.jsp");
     }
 
-    //院系管理
-    function facultymgr() {
+    //打印班级学生信息
+    function dybjxsxx() {
         clearClass()
         $("#facultyinfo").attr("class", "nav-link active")
-        $("#section").load("facultymgr.jsp");
+        $("#section").load("dybjxsxx.jsp");
     }
 
     // 如果存在无效字段，则用于禁用表单提交的示例启动器 JavaScript

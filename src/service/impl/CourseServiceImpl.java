@@ -107,4 +107,17 @@ public class CourseServiceImpl implements CourseService {
         }
         return result;
     }
+
+    @Override
+    public List<Course> getAllByTeacherNo(int page, int number, String course, String teacherNo) {
+        List<Course> courses = null;
+        try {
+            courses = courseDao.getAllByTeacherNo(page,number,course,teacherNo);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return courses;
+    }
 }

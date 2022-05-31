@@ -15,4 +15,7 @@ public interface CommonDao {
     public long facultyCount( String facultyId,String facultyName);
     public int userInfoUpdate(User user, String role);
     public int userUpdatePwd(String newPwd,String oldPwd,String uno);
+
+
+    public long courseCountByTeacherNo( String selectFuzzy,String teacherNo);
 }

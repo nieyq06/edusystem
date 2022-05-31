@@ -3,6 +3,7 @@ package dao.impl;
 import dao.SubjectDao;
 import entity.Course;
 import entity.Subject;
+import entity.TeacherInfo;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import utils.DbUtils;
@@ -54,4 +55,6 @@ public class SubjectDaoImpl implements SubjectDao {
     public int delete(int id) {
         return 0;
     }
+
+
 }

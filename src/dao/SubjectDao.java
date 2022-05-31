@@ -20,4 +20,5 @@ public interface SubjectDao {
     public int insert(Subject subject);
     public int update(Subject subject);
     public int delete(int id);
+
 }
