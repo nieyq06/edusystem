@@ -1,5 +1,7 @@
 package dao;
 
+import entity.Course;
+import entity.StuSelectCourse;
 import entity.TeacherInfo;
 import entity.User;
 
@@ -16,4 +18,7 @@ public interface TeacherDao {
     public TeacherInfo getById(String id);
     public int update(User user);
     public int delete(String id);
+
+    public List<StuSelectCourse> STU_SELECT_COURSES (int page, int number, String stuNo, String stuName,String teacherNo);
+    public int updateScore(String stuNo,double score,String courseId);
 }

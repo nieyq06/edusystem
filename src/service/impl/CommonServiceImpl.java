@@ -114,4 +114,32 @@ public class CommonServiceImpl implements CommonService {
         }
         return count;
     }
+
+    @Override
+    public long cjlrCountByTeacherNo(String stuNo, String stuName, String teacherNo) {
+        long count = 0;
+        try {
+            DbUtils.begin();
+            count = commonDao.cjlrCountByTeacherNo(stuNo,stuName,teacherNo);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public long xsxk(String selectC) {
+        long count = 0;
+        try {
+            DbUtils.begin();
+            count = commonDao.xsxk(selectC);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return count;
+    }
 }

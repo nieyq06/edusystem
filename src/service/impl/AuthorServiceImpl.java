@@ -31,4 +31,32 @@ public class AuthorServiceImpl implements AuthorService {
         }
         return user;
     }
+
+    @Override
+    public long registerCheck(String userno) {
+        long count = 0;
+        try {
+            DbUtils.begin();
+            count = authorDao.registerCheck(userno);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public long register(User user) {
+        long count = 0;
+        try {
+            DbUtils.begin();
+            count = authorDao.register(user);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return count;
+    }
 }

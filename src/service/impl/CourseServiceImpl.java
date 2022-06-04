@@ -4,6 +4,7 @@ import dao.CourseDao;
 import dao.impl.CourseDaoImpl;
 import entity.Course;
 import entity.Faculty;
+import entity.StuSelectCourse;
 import entity.TeacherInfo;
 import service.CourseService;
 import utils.DbUtils;
@@ -120,4 +121,30 @@ public class CourseServiceImpl implements CourseService {
         }
         return courses;
     }
+
+    @Override
+    public List<StuSelectCourse> xsxk(int page, int number, String selectC) {
+        List<StuSelectCourse> stuSelectCourses = null;
+        try {
+            stuSelectCourses = courseDao.xsxk(page,number,selectC);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return stuSelectCourses;
+    }
+
+    @Override
+    public int stuAdd(String stuNo, String courseId) {
+        int result = 0;
+        try {
+            DbUtils.begin();
+            result = courseDao.stuAdd(stuNo,courseId);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;    }
 }

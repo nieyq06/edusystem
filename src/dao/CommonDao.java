@@ -1,6 +1,9 @@
 package dao;
 
+import entity.StuSelectCourse;
 import entity.User;
+
+import java.util.List;
 
 /**
  * Author: nyq
@@ -18,4 +21,6 @@ public interface CommonDao {
 
 
     public long courseCountByTeacherNo( String selectFuzzy,String teacherNo);
+    public long cjlrCountByTeacherNo( String stuNo, String stuName,String teacherNo);
+    public long xsxk (String selectC);
 }

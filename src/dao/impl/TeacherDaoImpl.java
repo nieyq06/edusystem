@@ -1,9 +1,7 @@
 package dao.impl;
 
 import dao.TeacherDao;
-import entity.Faculty;
-import entity.TeacherInfo;
-import entity.User;
+import entity.*;
 import org.apache.commons.dbutils.BaseResultSetHandler;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -62,6 +60,39 @@ public class TeacherDaoImpl implements TeacherDao {
         String sql="delete from user where roleid=? and userid=?";
         try {
             int result = queryRunner.update(DbUtils.getConnection(),sql, new BeanHandler<User>(User.class),2,id);
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public List<StuSelectCourse> STU_SELECT_COURSES(int page, int number, String stuNo, String stuName,String teacherNo) {
+        int _page = (page-1) * 15;
+        String sql = "select c.courseid,c.coursename,c.credit,u.userno,c.teacherno,u.username,f.facultyname,c.facultyid,if(s.scores=0.00,'',s.scores) as scores,u.subjectid,sub.subjectname from course c join score s on c.courseid=s.courseid join user u on s.userno=u.userno join faculty f on f.facultyid=c.facultyid join subject sub on u.subjectid=sub.subjectid where c.teacherno=?";
+
+        if(!stuNo.equals("")){
+            sql += " and u.userno like \"%"+stuNo+"%\"";
+        }
+        if(!stuName.equals("")){
+            sql += " and u.username =\""+stuName+"\"";
+        }
+        sql +="  limit ?,?";
+        try {
+            List<StuSelectCourse> tchs = queryRunner.query(DbUtils.getConnection(),sql, new BeanListHandler<StuSelectCourse>(StuSelectCourse.class),teacherNo,_page,number);
+            return tchs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public int updateScore(String stuNo, double score,String courseId) {
+        String sql="update score set scores=? where userno=? and courseid=?";
+        try {
+            int result = queryRunner.update(DbUtils.getConnection(),sql,score,stuNo,courseId);
             return result;
         } catch (SQLException e) {
             e.printStackTrace();

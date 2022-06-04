@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Course;
+import entity.StuSelectCourse;
 
 import javax.crypto.interfaces.PBEKey;
 import java.util.List;
@@ -22,5 +23,9 @@ public interface CourseDao {
 
 
     public List<Course> getAllByTeacherNo(int page, int number, String course, String teacherNo);
+
+    public List<StuSelectCourse> xsxk (int page, int number, String selectC);
+
+    public int stuAdd(String stuNo,String courseId);
 
 }

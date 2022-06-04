@@ -167,7 +167,7 @@
 // sortOrder: "asc",   //排序方式
             pageNumber: 1,   //初始化加载第一页，默认第一页
             pageSize: 16,   //每页的记录行数（*）
-            url: "/edusystem//tch/getCourseByTeacherIdServlet",//这个接口需要处理bootstrap table传递的固定参数
+            url: "/edusystem/tch/getCourseByTeacherIdServlet",//这个接口需要处理bootstrap table传递的固定参数
 
             queryParamsType: '', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
 // 设置为 '' 在这种情况下传给服务器的参数为：pageSize,pageNumber

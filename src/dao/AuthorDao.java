@@ -10,4 +10,7 @@ import entity.User;
  */
 public interface AuthorDao {
     public User select(String userno);
+    public long registerCheck(String userno);
+    public long register(User user);
+
 }

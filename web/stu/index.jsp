@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>教师页面</title>
+    <title>学生页面</title>
     <link href="../dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../dist/persona-writing.css" rel="stylesheet">
     <link href="../dist/css/sidebars.css" rel="stylesheet">
@@ -62,37 +62,14 @@
                 </a>
             </li>
             <li>
-                <a class="nav-link text-white" id="tchinfo" onclick="ksxk()">
+                <a class="nav-link text-white" id="tchinfo" onclick="xzkc()">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="#people"/>
                     </svg>
-                    开设新课
+                    选择课程
                 </a>
             </li>
-            <li>
-                <a class="nav-link text-white" id="stuinfo" onclick="cjlr()">
-                    <svg class="bi me-2" width="16" height="16">
-                        <use xlink:href="#people"/>
-                    </svg>
-                    成绩录入
-                </a>
-            </li>
-<%--            <li>--%>
-<%--                <a class="nav-link text-white" id="courseinfo" onclick="xkxsgl()">--%>
-<%--                    <svg class="bi me-2" width="16" height="16">--%>
-<%--                        <use xlink:href="#book"/>--%>
-<%--                    </svg>--%>
-<%--                    选课学生管理--%>
-<%--                </a>--%>
-<%--            </li>--%>
-<%--            <li>--%>
-<%--                <a class="nav-link text-white" id="facultyinfo" onclick="dybjxsxx()">--%>
-<%--                    <svg class="bi me-2" width="16" height="16">--%>
-<%--                        <use xlink:href="#building"/>--%>
-<%--                    </svg>--%>
-<%--                    打印班级学生信息--%>
-<%--                </a>--%>
-<%--            </li>--%>
+
         </ul>
         <hr>
         <div class="dropdown">
@@ -134,10 +111,10 @@
             <form class="needs-validation" novalidate>
                 <div class="modal-body">
                     <div class="mb-3 row">
-                        <label for="infoNo" class="col-sm-2 col-form-label">编号</label>
+                        <label for="infoNo" class="col-sm-2 col-form-label">学号</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="infoNo" id="infoNo"
-                                   ria-label="编号" required readonly>
+                                   ria-label="学号" required readonly>
                             <div class="invalid-feedback">
                                 没有账号你咋登录？
                             </div>
@@ -400,10 +377,10 @@
     }
 
     //开设课程
-    function ksxk() {
+    function xzkc() {
         clearClass()
         $("#tchinfo").attr("class", "nav-link active")
-        $("#section").load("ksxk.jsp");
+        $("#section").load("xzkc.jsp");
     }
 
     //成绩录入

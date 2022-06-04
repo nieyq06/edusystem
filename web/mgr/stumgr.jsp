@@ -76,7 +76,7 @@
                             <input type="text" class="form-control" name="infoUsername" id="infoUsername"
                                    ria-label="教师姓名" required>
                             <div class="invalid-feedback">
-                                教师姓名不能为空
+                                学生姓名不能为空
                             </div>
                         </div>
                     </div>

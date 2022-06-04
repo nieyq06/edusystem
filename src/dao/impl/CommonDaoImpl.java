@@ -1,6 +1,7 @@
 package dao.impl;
 
 import dao.CommonDao;
+import entity.StuSelectCourse;
 import entity.User;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -8,6 +9,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import utils.DbUtils;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Author: nyq
@@ -133,6 +135,40 @@ public class CommonDaoImpl implements CommonDao {
         if(!teacherNo.equals("")){
             sql += " and teacherno =\""+teacherNo+"\"";
         }
+        try {
+            count = (long)queryRunner.query(DbUtils.getConnection(),sql,new ScalarHandler());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public long cjlrCountByTeacherNo(String stuNo, String stuName, String teacherNo) {
+        long count = 0;
+        String sql = "select count(*) from course c join score s on c.courseid=s.courseid join user u on s.userno=u.userno join faculty f on f.facultyid=c.facultyid join subject sub on u.subjectid=sub.subjectid where c.teacherno=?";
+        if(!stuNo.equals("")){
+            sql += " and u.userno like \"%"+stuNo+"%\"";
+        }
+        if(!stuName.equals("")){
+            sql += " and u.username =\""+stuName+"\"";
+        }
+        try {
+            count = (long)queryRunner.query(DbUtils.getConnection(),sql,new ScalarHandler(),teacherNo);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public long xsxk(String selectC) {
+        long count = 0;
+        String sql = "select count(*) from course c join faculty f on c.facultyid=f.facultyid join user u on c.teacherno=u.userno where 1=1";
+        if(!selectC.equals("")){
+            sql += " and (c.CourseId like \"%"+selectC+"%\" or c.CourseName like \"%"+selectC+"%\" or u.username like \"%"+selectC+"%\" or u.username like \"%\""+selectC+"\"%\")";
+        }
+
         try {
             count = (long)queryRunner.query(DbUtils.getConnection(),sql,new ScalarHandler());
         } catch (SQLException e) {

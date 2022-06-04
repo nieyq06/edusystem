@@ -21,4 +21,7 @@ public interface CommonService {
 
     public long getCourseAllByTeacherId( String course, String teacherNo);
 
+    public long cjlrCountByTeacherNo( String stuNo, String stuName,String teacherNo);
+    public long xsxk (String selectC);
+
 }

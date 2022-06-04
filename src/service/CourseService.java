@@ -1,6 +1,7 @@
 package service;
 
 import entity.Course;
+import entity.StuSelectCourse;
 
 import java.util.List;
 
@@ -21,4 +22,8 @@ public interface CourseService {
 
     public List<Course> getAllByTeacherNo(int page, int number, String course, String teacherNo);
 
+    public List<StuSelectCourse> xsxk (int page, int number, String selectC);
+
+
+    public int stuAdd(String stuNo,String courseId);
 }

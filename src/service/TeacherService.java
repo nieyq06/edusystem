@@ -1,5 +1,6 @@
 package service;
 
+import entity.StuSelectCourse;
 import entity.TeacherInfo;
 import java.util.List;
 
@@ -11,4 +12,8 @@ import java.util.List;
  */
 public interface TeacherService {
     public List<TeacherInfo> getByAll();
+
+    public List<StuSelectCourse> STU_SELECT_COURSES (int page, int number, String stuNo, String stuName, String teacherNo);
+    public int updateScore(String stuNo,double score,String courseId);
+
 }

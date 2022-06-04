@@ -10,4 +10,6 @@ import entity.User;
  */
 public interface AuthorService {
     public User login(String userid, String password);
+    public long registerCheck(String userno);
+    public long register(User user);
 }

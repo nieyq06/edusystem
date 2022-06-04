@@ -4,6 +4,7 @@ import dao.AuthorDao;
 import entity.User;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import utils.DbUtils;
 
 import java.sql.SQLException;
@@ -26,5 +27,31 @@ public class AuthorDaoImpl implements AuthorDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public long registerCheck(String userno) {
+        long count = 0;
+        String sql = "select count(*) from user where userno=?";
+
+        try {
+            count = (long)queryRunner.query(DbUtils.getConnection(),sql,new ScalarHandler(),userno);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public long register(User user) {
+        long count = 0;
+        String sql = "insert into user(userno,Password,username,sex,SubjectId,FacultyId,tel,roleid) value(?,?,?,?,?,?,?,?)";
+
+        try {
+            count = (long)queryRunner.update(DbUtils.getConnection(),sql,user.getUserNo(),user.getPassword(),user.getUserName(),user.getSex(),user.getSubjectId(),user.getFacultyId(),user.getTel(),"3");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }

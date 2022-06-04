@@ -1,9 +1,7 @@
 package dao.impl;
 
 import dao.CourseDao;
-import entity.Course;
-import entity.Faculty;
-import entity.TeacherInfo;
+import entity.*;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -134,5 +132,35 @@ public class CourseDaoImpl implements CourseDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<StuSelectCourse> xsxk(int page, int number, String selectC) {
+        int _page = (page-1) * 15;
+        String sql = "select c.courseid,coursename,c.credit,c.FacultyId,f.FacultyName,u.UserName from course c join faculty f on c.facultyid=f.facultyid join user u on c.teacherno=u.userno where 1=1";
+
+        if(!selectC.equals("")){
+            sql += " and (c.CourseId like \"%"+selectC+"%\" or c.CourseName like \"%"+selectC+"%\" or u.username like \"%"+selectC+"%\" or u.username like \"%\""+selectC+"\"%\")";
+        }
+        sql +="  limit ?,?";
+        try {
+            List<StuSelectCourse> stuSelectCourses = queryRunner.query(DbUtils.getConnection(),sql, new BeanListHandler<StuSelectCourse>(StuSelectCourse.class),_page,number);
+            return stuSelectCourses;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public int stuAdd(String stuNo, String courseId) {
+        String sql = "insert into score(userno,courseid,scores) values(?,?,?)";
+        try {
+            int result = queryRunner.update(DbUtils.getConnection(),sql,stuNo,courseId,0);
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
