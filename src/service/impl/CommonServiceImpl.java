@@ -130,11 +130,25 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public long xsxk(String selectC) {
+    public long xsxk(String selectC,String stuNo) {
         long count = 0;
         try {
             DbUtils.begin();
-            count = commonDao.xsxk(selectC);
+            count = commonDao.xsxk(selectC,stuNo);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public long yxkc(String selectC,String stuNo) {
+        long count = 0;
+        try {
+            DbUtils.begin();
+            count = commonDao.xsxk(selectC,stuNo);
             DbUtils.commit();
         } catch (Exception e) {
             DbUtils.rollback();

@@ -135,16 +135,36 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public List<StuSelectCourse> xsxk(int page, int number, String selectC) {
+    public List<StuSelectCourse> xsxk(int page, int number, String selectC,String userNo) {
         int _page = (page-1) * 15;
-        String sql = "select c.courseid,coursename,c.credit,c.FacultyId,f.FacultyName,u.UserName from course c join faculty f on c.facultyid=f.facultyid join user u on c.teacherno=u.userno where 1=1";
+        String sql = "select c.courseid,coursename,c.credit,c.FacultyId,f.FacultyName,u.UserName from course c join faculty f on c.facultyid=f.facultyid join user u on c.teacherno=u.userno where 1=1  and CourseId not in(select CourseId from score where userno=?)";
 
         if(!selectC.equals("")){
-            sql += " and (c.CourseId like \"%"+selectC+"%\" or c.CourseName like \"%"+selectC+"%\" or u.username like \"%"+selectC+"%\" or u.username like \"%\""+selectC+"\"%\")";
+            sql += " and (c.CourseId like \"%"+selectC+"%\" or c.CourseName like \"%"+selectC+"%\" or u.username like \"%"+selectC+"%\" or u.username like \"%"+selectC+"%\")";
         }
         sql +="  limit ?,?";
+        System.out.println(sql);
         try {
-            List<StuSelectCourse> stuSelectCourses = queryRunner.query(DbUtils.getConnection(),sql, new BeanListHandler<StuSelectCourse>(StuSelectCourse.class),_page,number);
+            List<StuSelectCourse> stuSelectCourses = queryRunner.query(DbUtils.getConnection(),sql, new BeanListHandler<StuSelectCourse>(StuSelectCourse.class),userNo,_page,number);
+            return stuSelectCourses;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<StuSelectCourse> yxkc(int page, int number, String selectC, String userNo) {
+        int _page = (page-1) * 15;
+        String sql = "select c.courseid,coursename,c.credit,c.FacultyId,f.FacultyName,u.UserName from course c join faculty f on c.facultyid=f.facultyid join user u on c.teacherno=u.userno where 1=1  and CourseId in(select CourseId from score where userno=?)";
+
+        if(!selectC.equals("")){
+            sql += " and (c.CourseId like \"%"+selectC+"%\" or c.CourseName like \"%"+selectC+"%\" or u.username like \"%"+selectC+"%\" or u.username like \"%"+selectC+"%\")";
+        }
+        sql +="  limit ?,?";
+        System.out.println(sql);
+        try {
+            List<StuSelectCourse> stuSelectCourses = queryRunner.query(DbUtils.getConnection(),sql, new BeanListHandler<StuSelectCourse>(StuSelectCourse.class),userNo,_page,number);
             return stuSelectCourses;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -157,6 +177,18 @@ public class CourseDaoImpl implements CourseDao {
         String sql = "insert into score(userno,courseid,scores) values(?,?,?)";
         try {
             int result = queryRunner.update(DbUtils.getConnection(),sql,stuNo,courseId,0);
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public int withdrawFromTheCourse(String stuNo, String courseId) {
+        String sql = "delete from score where courseid=? and userno=?";
+        try {
+            int result = queryRunner.update(DbUtils.getConnection(),sql,courseId,stuNo);
             return result;
         } catch (SQLException e) {
             e.printStackTrace();

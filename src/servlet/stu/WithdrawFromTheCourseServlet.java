@@ -1,13 +1,11 @@
 package servlet.stu; /**
  * Author: nyq
- * Date：2022/6/3
+ * Date：2022/6/4
  * Description: 介绍
  * Version： 1.0
  */
 
-import service.CommonService;
 import service.CourseService;
-import service.impl.CommonServiceImpl;
 import service.impl.CourseServiceImpl;
 
 import javax.servlet.*;
@@ -15,8 +13,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "StuAddCourseServlet", value = "/stu/stuAddCourseServlet")
-public class StuAddCourseServlet extends HttpServlet {
+@WebServlet(name = "WithdrawFromTheCourseServlet", value = "/stu/withdrawFromTheCourseServlet")
+public class WithdrawFromTheCourseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);
@@ -27,7 +25,7 @@ public class StuAddCourseServlet extends HttpServlet {
         String courseId = request.getParameter("courseId");
         String stuNo = request.getParameter("stuNo");
         CourseService courseService = new CourseServiceImpl();
-        int result = courseService.stuAdd(stuNo,courseId);
+        int result = courseService.withdrawFromTheCourse(stuNo,courseId);
         String res = "{\"res\":\"" + result + "\"}";
         response.getWriter().write(res);
     }

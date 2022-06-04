@@ -58,7 +58,7 @@
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="#home"/>
                     </svg>
-                    首页
+                    已选课程
                 </a>
             </li>
             <li>
@@ -373,7 +373,7 @@
     function home() {
         clearClass()
         $("#index_home").attr("class", "nav-link active")
-        $("#section").load("home.jsp");
+        $("#section").load("yxkc.jsp");
     }
 
     //开设课程
@@ -381,27 +381,6 @@
         clearClass()
         $("#tchinfo").attr("class", "nav-link active")
         $("#section").load("xzkc.jsp");
-    }
-
-    //成绩录入
-    function cjlr() {
-        clearClass()
-        $("#stuinfo").attr("class", "nav-link active")
-        $("#section").load("cjlr.jsp");
-    }
-
-    //选课学生管理
-    function xkxsgl() {
-        clearClass()
-        $("#courseinfo").attr("class", "nav-link active")
-        $("#section").load("xkxsgl.jsp");
-    }
-
-    //打印班级学生信息
-    function dybjxsxx() {
-        clearClass()
-        $("#facultyinfo").attr("class", "nav-link active")
-        $("#section").load("dybjxsxx.jsp");
     }
 
     // 如果存在无效字段，则用于禁用表单提交的示例启动器 JavaScript

@@ -1,15 +1,14 @@
-<%@ page import="entity.Faculty" %>
-<%@ page import="java.util.List" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: nyq
-  Date: 2022/6/3
-  Time: 18:43
+  Date: 2022/6/4
+  Time: 23:20
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>已选课程</title>
 </head>
 <body>
 
@@ -47,9 +46,6 @@
 </html>
 <script>
     onload = getAll()
-    var setCourseId = ""
-    var setDeleteUserId = ""
-    var isSave = "";//保存按钮状态
 
     // 获取所有课程信息
     function getAll() {
@@ -66,7 +62,7 @@
 // sortOrder: "asc",   //排序方式
             pageNumber: 1,   //初始化加载第一页，默认第一页
             pageSize: 16,   //每页的记录行数（*）
-            url: "/edusystem/stu/stuCourseSelectionServlet",//这个接口需要处理bootstrap table传递的固定参数
+            url: "/edusystem/stu/getYxkcServlet",//这个接口需要处理bootstrap table传递的固定参数
 
             queryParamsType: '', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort
 // 设置为 '' 在这种情况下传给服务器的参数为：pageSize,pageNumber
@@ -132,13 +128,13 @@
                 width: 200,
                 events: {
                     'click #edit': function (e, value, row, index) {
-                        btnSelect(row.CourseId)
+                        btnTxkc(row.CourseId)
                     },
                 },
 
                 formatter: function (value, row, index) {
                     var result = "";
-                    result += '<button id="edit" class=" btn btn-info btn-sm operation" data-toggle="modal" data-target="#editModal">选择</button>';
+                    result += '<button id="edit" class=" btn btn-info btn-sm operation" data-toggle="modal" data-target="#editModal">退选</button>';
                     return result;
                 }
             }],
@@ -152,24 +148,23 @@
 
 
 
-    function btnSelect(val) {
-
+    function btnTxkc(val) {
         let user = ${sessionScope.userInfo};
         let stuNo = user.UserNo;
         $.ajax({
             type: "post",
             dataType: "json",
-            url: "${pageContext.request.contextPath}/stu/stuAddCourseServlet",
+            url: "${pageContext.request.contextPath}/stu/withdrawFromTheCourseServlet",
             data: {"courseId": val,"stuNo":stuNo},
             success: function (flag) {
                 console.log(flag)
                 if (flag.res==1) {
-                    model_Msg("#modelMsg", "#mesg", "选择成功", "alert modal-sm alert-success", 1000)
-                    setTimeout(function () {
-                        location.reload();
-                    }, 1000);
+                    model_Msg("#modelMsg", "#mesg", "推选成功", "alert modal-sm alert-success", 1000)
+
+                    getAll();
                 } else {
                     model_Msg("#modelMsg", "#mesg", "出差啦，请重试", "alert modal-sm alert-danger", 1000)
+
                 }
             }
         });

@@ -24,8 +24,10 @@ public interface CourseDao {
 
     public List<Course> getAllByTeacherNo(int page, int number, String course, String teacherNo);
 
-    public List<StuSelectCourse> xsxk (int page, int number, String selectC);
+    public List<StuSelectCourse> xsxk (int page, int number, String selectC,String userNo);
+    public List<StuSelectCourse> yxkc (int page, int number, String selectC,String userNo);
 
     public int stuAdd(String stuNo,String courseId);
+    public int withdrawFromTheCourse(String stuNo,String courseId);
 
 }

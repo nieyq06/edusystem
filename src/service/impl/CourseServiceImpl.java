@@ -123,10 +123,23 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<StuSelectCourse> xsxk(int page, int number, String selectC) {
+    public List<StuSelectCourse> xsxk(int page, int number, String selectC,String userNo) {
         List<StuSelectCourse> stuSelectCourses = null;
         try {
-            stuSelectCourses = courseDao.xsxk(page,number,selectC);
+            stuSelectCourses = courseDao.xsxk(page,number,selectC,userNo);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return stuSelectCourses;
+    }
+
+    @Override
+    public List<StuSelectCourse> yxkc(int page, int number, String selectC, String userNo) {
+        List<StuSelectCourse> stuSelectCourses = null;
+        try {
+            stuSelectCourses = courseDao.yxkc(page,number,selectC,userNo);
             DbUtils.commit();
         } catch (Exception e) {
             DbUtils.rollback();
@@ -146,5 +159,20 @@ public class CourseServiceImpl implements CourseService {
             DbUtils.rollback();
             e.printStackTrace();
         }
-        return result;    }
+        return result;
+    }
+
+    @Override
+    public int withdrawFromTheCourse(String stuNo, String courseId) {
+        int result = 0;
+        try {
+            DbUtils.begin();
+            result = courseDao.withdrawFromTheCourse(stuNo,courseId);
+            DbUtils.commit();
+        } catch (Exception e) {
+            DbUtils.rollback();
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

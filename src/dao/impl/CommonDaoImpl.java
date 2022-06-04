@@ -162,15 +162,31 @@ public class CommonDaoImpl implements CommonDao {
     }
 
     @Override
-    public long xsxk(String selectC) {
+    public long xsxk(String selectC,String stuNo) {
         long count = 0;
-        String sql = "select count(*) from course c join faculty f on c.facultyid=f.facultyid join user u on c.teacherno=u.userno where 1=1";
+        String sql = "select count(*) from course c join faculty f on c.facultyid=f.facultyid join user u on c.teacherno=u.userno where 1=1  and CourseId not in(select CourseId from score where userno=?)";
         if(!selectC.equals("")){
-            sql += " and (c.CourseId like \"%"+selectC+"%\" or c.CourseName like \"%"+selectC+"%\" or u.username like \"%"+selectC+"%\" or u.username like \"%\""+selectC+"\"%\")";
+            sql += " and (c.CourseId like \"%"+selectC+"%\" or c.CourseName like \"%"+selectC+"%\" or u.username like \"%"+selectC+"%\" or u.username like \"%"+selectC+"%\")";
         }
 
         try {
-            count = (long)queryRunner.query(DbUtils.getConnection(),sql,new ScalarHandler());
+            count = (long)queryRunner.query(DbUtils.getConnection(),sql,new ScalarHandler(),stuNo);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public long yxkc(String selectC, String stuNo) {
+        long count = 0;
+        String sql = "select count(*) from course c join faculty f on c.facultyid=f.facultyid join user u on c.teacherno=u.userno where 1=1  and CourseId in(select CourseId from score where userno=?)";
+        if(!selectC.equals("")){
+            sql += " and (c.CourseId like \"%"+selectC+"%\" or c.CourseName like \"%"+selectC+"%\" or u.username like \"%"+selectC+"%\" or u.username like \"%"+selectC+"%\")";
+        }
+
+        try {
+            count = (long)queryRunner.query(DbUtils.getConnection(),sql,new ScalarHandler(),stuNo);
         } catch (SQLException e) {
             e.printStackTrace();
         }
