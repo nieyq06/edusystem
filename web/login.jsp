@@ -267,6 +267,7 @@
             confirmNoCheck = false
             userNo.className = "form-control invalidate"
             userNoNull.className = "error"
+            checkUserNo.className = "invalid-feedback"
             return
         } else {
             confirmNoCheck = true
