@@ -53,16 +53,16 @@
         </a>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a class="nav-link active" id="index_home" onclick="home()">
-                    <svg class="bi me-2" width="16" height="16">
-                        <use xlink:href="#home"/>
-                    </svg>
-                    首页
-                </a>
-            </li>
+<%--            <li class="nav-item">--%>
+<%--                <a class="nav-link active" id="index_home" onclick="home()">--%>
+<%--                    <svg class="bi me-2" width="16" height="16">--%>
+<%--                        <use xlink:href="#home"/>--%>
+<%--                    </svg>--%>
+<%--                    首页--%>
+<%--                </a>--%>
+<%--            </li>--%>
             <li>
-                <a class="nav-link text-white" id="tchinfo" onclick="ksxk()">
+                <a class="nav-link active" id="tchinfo" onclick="ksxk()">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="#people"/>
                     </svg>
@@ -263,7 +263,7 @@
 </body>
 </html>
 <script>
-    onload = home()
+    onload = ksxk()
     var checkPwd = false
     var confirmPwd = false
 

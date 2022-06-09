@@ -30,11 +30,11 @@
             </select>
         </div>
         <div class="col-6">
-            <button type="button" class="btn btn-success" id="btnSelect"> 搜索</button>
-            <button type="button" class="btn btn-success btn-float-r" id="btnOutput" onclick="fileOutput"> 导出
-            </button>
-            <button type="button" class="btn btn-info btn-float-r" id="btnImport" onclick="fileImport()"> 导入
-            </button>
+<%--            <button type="button" class="btn btn-success" id="btnSelect"> 搜索</button>--%>
+<%--            <button type="button" class="btn btn-success btn-float-r" id="btnOutput" onclick="fileOutput"> 导出--%>
+<%--            </button>--%>
+<%--            <button type="button" class="btn btn-info btn-float-r" id="btnImport" onclick="fileImport()"> 导入--%>
+<%--            </button>--%>
             <button type="button" class="btn btn-warning btn-float-r" id="btnInsert" onclick="btnInsert()"> 添加
             </button>
         </div>

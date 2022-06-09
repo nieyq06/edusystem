@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-@WebServlet(name = "GetCourseByTeacherIdServlet", value = "/tch/getCourseByTeacherIdServlet")
+    @WebServlet(name = "GetCourseByTeacherIdServlet", value = "/tch/getCourseByTeacherIdServlet")
 public class GetCourseByTeacherIdServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

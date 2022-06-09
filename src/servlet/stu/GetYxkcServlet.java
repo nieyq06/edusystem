@@ -32,7 +32,6 @@ public class GetYxkcServlet extends HttpServlet {
         int number = Integer.parseInt(request.getParameter("pageSize"));//每页条数
         int page = Integer.parseInt(request.getParameter("pageNumber"));//页码
 
-        System.out.println("!!!");
         String selectC = request.getParameter("selectC").toString();
         String stuNo = request.getParameter("stuNo").toString();
         CourseService courseService = new CourseServiceImpl();

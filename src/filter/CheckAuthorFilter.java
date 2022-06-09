@@ -1,6 +1,5 @@
 package filter;
 
-
 import entity.User;
 
 import javax.servlet.*;
@@ -12,12 +11,12 @@ import java.io.IOException;
 
 /**
  * Author: nyq
- * Date：2022/5/20
- * Description: 用户角色过滤器
+ * Date：2022/6/9
+ * Description: 介绍
  * Version： 1.0
  */
-@WebFilter(value = "/admin/*")
-public class CheckRoleFilter implements Filter {
+@WebFilter(value = {"/admin/*","/tch/*","/stu/*"})
+public class CheckAuthorFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -32,15 +31,12 @@ public class CheckRoleFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session=request.getSession();
         User user = (User) session.getAttribute("user");
-        String role = user.getRoleId();
 //        System.out.println(role);
-        if(role!=null && (role.equals("1")||role.equals("2"))){
-            filterChain.doFilter(request,response);
-        }else{
+        if(user == null){
             response.sendRedirect(request.getContextPath()+"/login.jsp");
-//            response.sendRedirect("/login.jsp");
+        }else{
+            filterChain.doFilter(request,response);
         }
-
     }
 
     @Override

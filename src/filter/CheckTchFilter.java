@@ -1,6 +1,5 @@
 package filter;
 
-
 import entity.User;
 
 import javax.servlet.*;
@@ -12,12 +11,12 @@ import java.io.IOException;
 
 /**
  * Author: nyq
- * Date：2022/5/20
- * Description: 用户角色过滤器
+ * Date：2022/6/6
+ * Description: 介绍
  * Version： 1.0
  */
-@WebFilter(value = "/admin/*")
-public class CheckRoleFilter implements Filter {
+@WebFilter(value = "/tch/*")
+public class CheckTchFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -27,20 +26,18 @@ public class CheckRoleFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         //权限验证
         //向下转型 拆箱
-//        System.out.println("管理员");
+        System.out.println("教师");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session=request.getSession();
-        User user = (User) session.getAttribute("user");
-        String role = user.getRoleId();
-//        System.out.println(role);
-        if(role!=null && (role.equals("1")||role.equals("2"))){
+        User role = (User) session.getAttribute("user");
+        System.out.println(role);
+        if(role!=null && role.getRoleId().equals("2")){
             filterChain.doFilter(request,response);
         }else{
-            response.sendRedirect(request.getContextPath()+"/login.jsp");
-//            response.sendRedirect("/login.jsp");
+//            response.sendRedirect(request.getContextPath()+"login.jsp");
+            response.sendRedirect("/edusystem/login.jsp");
         }
-
     }
 
     @Override

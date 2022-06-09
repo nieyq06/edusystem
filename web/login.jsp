@@ -84,7 +84,7 @@
                     <div class="mb-3 row">
                         <label for="userNo" class="col-sm-2 col-form-label">学号</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="userNo" id="userNo"
+                            <input type="text" class="form-control" name="userNo" onchange="checkUserNo()" id="userNo"
                                    ria-label="学号" required>
                             <div class="invalid-feedback" id="userNoNull">
                                 学号不能空
@@ -258,7 +258,8 @@
         })
     }
 
-    $('#userNo').change(function () {
+    function checkUserNo(){
+
         var checkUserNo = document.getElementById('checkUserNo')
         var userNo = document.getElementById('userNo')
         var userNoNull = document.getElementById('userNoNull')
@@ -292,7 +293,43 @@
                 }
             }
         })
-    })
+    }
+
+    // $('#userNo').change(function () {
+    //     var checkUserNo = document.getElementById('checkUserNo')
+    //     var userNo = document.getElementById('userNo')
+    //     var userNoNull = document.getElementById('userNoNull')
+    //
+    //     if (userNo.value == "" || userNo.value == null) {
+    //         confirmNoCheck = false
+    //         userNo.className = "form-control invalidate"
+    //         userNoNull.className = "error"
+    //         checkUserNo.className = "invalid-feedback"
+    //         return
+    //     } else {
+    //         confirmNoCheck = true
+    //         userNo.className = "form-control validate"
+    //         userNoNull.className = "invalid-feedback"
+    //     }
+    //     $.ajax({
+    //         method: "get",
+    //         dataType: "json",
+    //         url: "/edusystem/registerCheckServlet",
+    //         data: {"userno": userNo.value},
+    //         success: function (flag) {
+    //             console.log(flag)
+    //             if (flag.res == 1) {
+    //                 confirmNoCheck = false
+    //                 userNo.className = "form-control invalidate"
+    //                 checkUserNo.className = "error"
+    //             } else {
+    //                 confirmNoCheck = true
+    //                 userNo.className = "form-control validate"
+    //                 checkUserNo.className = "invalid-feedback"
+    //             }
+    //         }
+    //     })
+    // })
 
         // 如果存在无效字段，则用于禁用表单提交的示例启动器 JavaScript
         (function () {
@@ -337,7 +374,7 @@
                 } else if (flag.u == "0" && flag.role == "3") {
                     window.location.href = "/edusystem/stu/index.jsp";
                 } else if (flag.u == "-1") {
-                    show_msg("#modelMsg", "#mesg", "账号或密码有误", "alert modal-sm alert-var ", "1200");
+                    show_msg("#modelMsg", "#mesg", "账号或密码有误", "alert modal-sm alert-danger ", "1200");
                     // $('#inputVcode').val('');
                 } else {
                     show_msg("#modelMsg", "#mesg", "验证码有误", "alert modal-sm alert-danger", "1200");
@@ -450,7 +487,7 @@
 
     .content {
         width: auto;
-        height: 200px;
+        /*height: 200px;*/
         margin: auto;
     }
 
